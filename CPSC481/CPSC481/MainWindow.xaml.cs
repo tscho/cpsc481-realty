@@ -12,17 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AxShockwaveFlashObjects;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace CPSC481
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
+        ObservableCollection<House> results = new ObservableCollection<House>();
         public MainWindow()
         {
             InitializeComponent();
+
+            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood", "Calgary", "Alberta", "200,000"));
+            results.Add(new House("2600", "Conrad Drive", "NW", "Brentwood", "Calgary", "Alberta", "200,000"));
+
+            searchResults.ItemsSource = results;
+            favourites.ItemsSource = results;
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -48,31 +60,58 @@ namespace CPSC481
             {
                 if (i.Name == "setPosition")
                 {
-                    lat.Text = i.Arguments.ElementAt(0).Value;
-                    lng.Text = i.Arguments.ElementAt(1).Value;
+                    //lat.Text = i.Arguments.ElementAt(0).Value;
+                    //lng.Text = i.Arguments.ElementAt(1).Value;
                 }
             }
 
         }
 
+
+
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-                Search_Click(sender, null);
+            //if (e.Key == Key.Enter)
+                //Search_Click(sender, null);
         }
 
-        private void Search_Click(object sender, RoutedEventArgs e)
+        private void clickStoreystInfo(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void clickSquareFeetInfo(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void clickSearch(object sender, RoutedEventArgs e)
         {
             AxShockwaveFlashObjects.AxShockwaveFlash axFlash = wfh.Child as AxShockwaveFlashObjects.AxShockwaveFlash;
+           
+            for (int i = 0; i < results.Count; i++)
+            {
+                XElement call = new XElement("invoke",
+                   new XAttribute("name", "Add"),
+                   new XAttribute("returntype", "xml"),
+                   new XElement("arguments",
+                       new XElement("string", "2708 Conrad Dr. N.W."),
+                       new XElement("string", "200,000")
+                   )
+               );
+                axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+            }
 
-            XElement call = new XElement("invoke",
-                    new XAttribute("name", "Search"),
-                    new XAttribute("returntype", "xml"),
-                    new XElement("arguments",
-                        new XElement("string", address.Text)
-                    )
-                );
-            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+            
+        }
+
+        private void clickBedroomsInfo(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void clickBathroomsInfo(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
