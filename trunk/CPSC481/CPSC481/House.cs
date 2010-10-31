@@ -8,17 +8,19 @@ namespace CPSC481
 
     class House
     {
-        public string houseNumber { get; set; }
-        public string street { get; set; }
-        public string quandrant { get; set; }
-        public string address { get; set; }
-        public string price {get; set;}
-        public string area { get; set; }
-        public string city { get; set; }
-        public string province { get; set; }
-        public string source { get; set;}
+        public String houseNumber { get; set; }
+        public String street { get; set; }
+        public String quandrant { get; set; }
+        public String address { get; set; }
+        public String price { get; set; }
+        public String area { get; set; }
+        public String city { get; set; }
+        public String province { get; set; }
+        public String source { get; set;}
+        public String bedrooms { get; set; }
+        public String bathrooms { get; set; }
 
-        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price)
+        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms)
         {
             this.address = houseNumber + " " + street + " " + quandrant;
             this.houseNumber = houseNumber;
@@ -29,6 +31,8 @@ namespace CPSC481
             this.province = province;
             this.price = price;
             this.source = source;
+            this.bathrooms = bathrooms;
+            this.bedrooms = bedrooms;
         }
 
         public override string ToString()

@@ -30,8 +30,11 @@ namespace CPSC481
         {
             InitializeComponent();
 
-            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood", "Calgary", "Alberta", "200,000"));
-            results.Add(new House("2600", "Conrad Drive", "NW", "Brentwood", "Calgary", "Alberta", "200,000"));
+            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
+            results.Add(new House("300", "Meredith Road", "NE", "Brentwood,", "Calgary, ", "Alberta", "$400,000", "2", "2"));
+            results.Add(new House("2508", "Centre Street", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
+            results.Add(new House("12", "Cheyenne Crescent", "Northwest", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
+            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
 
             searchResults.ItemsSource = results;
             favourites.ItemsSource = results;
@@ -85,23 +88,22 @@ namespace CPSC481
         }
 
         private void clickSearch(object sender, RoutedEventArgs e)
-        {
-            AxShockwaveFlashObjects.AxShockwaveFlash axFlash = wfh.Child as AxShockwaveFlashObjects.AxShockwaveFlash;
-           
-            for (int i = 0; i < results.Count; i++)
+        {            
+            foreach(House currHome in results)
             {
                 XElement call = new XElement("invoke",
-                   new XAttribute("name", "Add"),
+                   new XAttribute("name", "add"),
                    new XAttribute("returntype", "xml"),
                    new XElement("arguments",
-                       new XElement("string", "2708 Conrad Dr. N.W."),
-                       new XElement("string", "200,000")
+                       new XElement("string", currHome.address),
+                       new XElement("string", currHome.price),
+                       new XElement("string", currHome.area),
+                       new XElement("string", currHome.city),
+                       new XElement("string", currHome.province)
                    )
                );
                 axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
             }
-
-            
         }
 
         private void clickBedroomsInfo(object sender, RoutedEventArgs e)
@@ -110,6 +112,31 @@ namespace CPSC481
         }
 
         private void clickBathroomsInfo(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = e.AddedItems[0] as House;
+            if(item == null) return;
+
+            XElement call = new XElement("invoke",
+                   new XAttribute("name", "set"),
+                   new XAttribute("returntype", "xml"),
+                   new XElement("arguments",
+                       new XElement("string", item.address)
+                   )
+            );
+            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+        }
+
+        private void vieDetails(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addToFavs(object sender, RoutedEventArgs e)
         {
 
         }
