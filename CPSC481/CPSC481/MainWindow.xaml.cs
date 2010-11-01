@@ -108,7 +108,6 @@ namespace CPSC481
 
         private void clickBedroomsInfo(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void clickBathroomsInfo(object sender, RoutedEventArgs e)
@@ -141,5 +140,11 @@ namespace CPSC481
 
         }
 
+        private void priceInfo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Modal modal = new Modal(results[0]);
+            modal.Owner = this;
+            modal.ShowDialog();
+        }
     }
 }
