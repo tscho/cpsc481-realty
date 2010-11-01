@@ -4,6 +4,12 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:ax="clr-namespace:AxShockwaveFlashObjects;assembly=AxInterop.ShockwaveFlashObjects"
         Loaded="WindowLoaded" Title="Home Finder" Height="768" Width="1024" MinHeight="768" MinWidth="1024">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="White" Offset="0" />
+            <GradientStop Color="SkyBlue" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
     <Window.Resources>
         <Style x:Key="HouseItem" TargetType="ListBoxItem">
             <Style.Resources>
@@ -121,7 +127,7 @@
                 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Price Range" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Margin="0,0,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand"/>
+                    <Image Margin="0,0,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" MouseDown="priceInfo_MouseDown"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="10,0,10,5"/>
@@ -194,6 +200,9 @@
 
 
          <ListBox Name="searchResults" SelectionChanged="searchResults_SelectionChanged"  VerticalAlignment="Stretch" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource HouseItem}" ItemTemplate="{StaticResource HouseTemplate}" Grid.Column="1" Grid.Row="2" > 
+            <ListBox.Background>
+                <SolidColorBrush />
+            </ListBox.Background>
         </ListBox>
         </Border>
         <Border Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" BorderThickness="3,0,0,0">
@@ -203,7 +212,7 @@
                     <GradientStop Color="DarkGray" Offset="1" />
                 </LinearGradientBrush>
             </Border.BorderBrush>
-            <ListBox Name="favourites" Margin="0,35,0,0" ItemsSource="{Binding}" ItemTemplate="{StaticResource HouseTemplate}" ItemContainerStyle="{StaticResource HouseItem}" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" >
+            <ListBox Name="favourites" Margin="0,35,0,0" ItemsSource="{Binding}" ItemTemplate="{StaticResource HouseTemplate}" ItemContainerStyle="{StaticResource HouseItem}" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Background="Transparent">
             </ListBox>
         </Border>
 

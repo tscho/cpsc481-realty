@@ -6,7 +6,7 @@ using System.Text;
 namespace CPSC481
 {
 
-    class House
+    public class House
     {
         public String houseNumber { get; set; }
         public String street { get; set; }
