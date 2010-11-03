@@ -5,10 +5,11 @@
         xmlns:ax="clr-namespace:AxShockwaveFlashObjects;assembly=AxInterop.ShockwaveFlashObjects"
         Loaded="WindowLoaded" Title="Home Finder" Height="768" Width="1024" MinHeight="768" MinWidth="1024">
     <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        <!--<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="White" Offset="0" />
             <GradientStop Color="SkyBlue" Offset="1" />
-        </LinearGradientBrush>
+        </LinearGradientBrush>-->
+        <SolidColorBrush Color="Gray"/>
     </Window.Background>
     <Window.Resources>
         <Style x:Key="HouseItem" TargetType="ListBoxItem">
@@ -65,7 +66,7 @@
                     </StackPanel>-->
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right">
-                    <Button Name="viewDetails" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Click="vieDetails" Content="More Information" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <Button Name="viewDetails" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Click="viewDetails" Content="More Information" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     <Button Name="addToFavs" Style="{StaticResource ButtonStyle}" Click="addToFavs" Content="Add to Favourites"/>
                 </StackPanel>
             </StackPanel>

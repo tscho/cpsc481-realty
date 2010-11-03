@@ -127,12 +127,15 @@ namespace CPSC481
                        new XElement("string", item.address)
                    )
             );
-            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+            //axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
         }
 
-        private void vieDetails(object sender, RoutedEventArgs e)
+        private void viewDetails(object sender, RoutedEventArgs e)
         {
-
+            var house = (House)((Button)sender).DataContext;
+            Modal modal = new Modal(house);
+            modal.Owner = this;
+            modal.ShowDialog();
         }
 
         private void addToFavs(object sender, RoutedEventArgs e)
@@ -142,9 +145,6 @@ namespace CPSC481
 
         private void priceInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Modal modal = new Modal(results[0]);
-            modal.Owner = this;
-            modal.ShowDialog();
         }
     }
 }
