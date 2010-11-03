@@ -18,28 +18,37 @@ namespace CPSC481
     /// </summary>
     public partial class Modal : Window
     {
-        private Brush inactiveBrush;
+        private bool willClose;
 
         public Modal(House houseToDisplay)
         {
             InitializeComponent();
+            willClose = false;
             detailGrid.DataContext = houseToDisplay;
         }
 
         private void Close_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            CloseBtn.Background = Brushes.YellowGreen;
+            willClose = true;
         }
 
         private void CloseBtn_MouseEnter(object sender, MouseEventArgs e)
         {
-            inactiveBrush = CloseBtn.Background;
             CloseBtn.Background = SystemColors.ActiveBorderBrush;
         }
 
         private void CloseBtn_MouseLeave(object sender, MouseEventArgs e)
         {
-            CloseBtn.Background = inactiveBrush;
+            CloseBtn.Background = Brushes.Transparent;
+            willClose = false;
+        }
+
+        private void CloseBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            CloseBtn.Background = Brushes.Transparent;
+            if (willClose)
+                this.Close();
         } 
     }
 }

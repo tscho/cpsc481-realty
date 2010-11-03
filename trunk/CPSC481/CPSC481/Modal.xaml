@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Modal" 
-        WindowStyle="None" Height="300" Width="300" 
+        WindowStyle="None"
         AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" SizeToContent="WidthAndHeight">
     <Border Margin="2,2,2,2" Background="Gray" BorderBrush="Silver" CornerRadius="16" BorderThickness="2">
         <Grid>
             <Grid.RowDefinitions>
@@ -12,31 +12,38 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                <Border Name="BackBtn" BorderThickness="2,0,2,2" BorderBrush="Silver" Width="72" Height="18" VerticalAlignment="Top" Background="Transparent" Visibility="Hidden">
-                </Border>
+                <!--<Border Name="BackBtn" BorderThickness="2,0,2,2" BorderBrush="Silver" Width="72" Height="18" VerticalAlignment="Top" Background="Transparent" Visibility="Hidden">
+                </Border>-->
                 <Border Name="CloseBtn" BorderThickness="2,0,0,2" BorderBrush="Silver" Width="32" Height="18"
                         VerticalAlignment="Top" Background="Transparent" CornerRadius="0,14,0,0"
                         MouseDown="Close_MouseDown"
                         MouseEnter="CloseBtn_MouseEnter"
-                        MouseLeave="CloseBtn_MouseLeave">
+                        MouseLeave="CloseBtn_MouseLeave" MouseUp="CloseBtn_MouseUp">
                     <TextBlock Foreground="White" TextAlignment="Center">X</TextBlock>
                 </Border>
             </StackPanel>
-            <Grid Grid.Row="1" Name="detailGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Image Height="Auto" Width="Auto" Margin="0" Source="resources\house.jpg" Grid.RowSpan="3"/>
-                <TextBlock Grid.Column="1" Text="{Binding Path=address}"></TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=price}"></TextBlock>
-            </Grid>
+            <TabControl Grid.Row="1" HorizontalAlignment="Left" Name="modalTabs" VerticalAlignment="Top" Margin="14,0,14,14" Width="500" Height="300">
+                <TabItem Header="Details" Name="detailsTab">
+                    <Grid Grid.Row="1" Name="detailGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="6*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0" Source="resources\house.jpg" Grid.RowSpan="3"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=address}" FontWeight="Bold" FontSize="24"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=price}" FontWeight="Bold" FontSize="24"></TextBlock>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Gallery" Name="galleryTab">
+                    
+                </TabItem>
+            </TabControl>
         </Grid>
     </Border>
 </Window>

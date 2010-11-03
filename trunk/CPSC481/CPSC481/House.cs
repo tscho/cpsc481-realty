@@ -10,7 +10,7 @@ namespace CPSC481
     {
         public String houseNumber { get; set; }
         public String street { get; set; }
-        public String quandrant { get; set; }
+        public String quadrant { get; set; }
         public String address { get; set; }
         public String price { get; set; }
         public String area { get; set; }
@@ -25,7 +25,7 @@ namespace CPSC481
             this.address = houseNumber + " " + street + " " + quandrant;
             this.houseNumber = houseNumber;
             this.street = street;
-            this.quandrant = quandrant;
+            this.quadrant = quandrant;
             this.area = area;
             this.city = city;
             this.province = province;
