@@ -19,8 +19,9 @@ namespace CPSC481
         public String source { get; set;}
         public String bedrooms { get; set; }
         public String bathrooms { get; set; }
+        public String detailText { get; set; }
 
-        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms)
+        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms, string detailText)
         {
             this.address = houseNumber + " " + street + " " + quandrant;
             this.houseNumber = houseNumber;
@@ -33,6 +34,7 @@ namespace CPSC481
             this.source = source;
             this.bathrooms = bathrooms;
             this.bedrooms = bedrooms;
+            this.detailText = detailText;
         }
 
         public override string ToString()
