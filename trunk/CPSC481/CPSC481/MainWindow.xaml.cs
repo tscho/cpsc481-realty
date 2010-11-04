@@ -33,7 +33,7 @@ namespace CPSC481
             results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
             results.Add(new House("300", "Meredith Road", "NE", "Brentwood,", "Calgary, ", "Alberta", "$400,000", "2", "2"));
             results.Add(new House("2508", "Centre Street", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
-            results.Add(new House("12", "Cheyenne Crescent", "Northwest", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
+            results.Add(new House("12", "Cheyenne Crescent", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
             results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
 
             searchResults.ItemsSource = results;
@@ -145,6 +145,11 @@ namespace CPSC481
 
         private void priceInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
+        }
+
+        private void viewGallery(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
