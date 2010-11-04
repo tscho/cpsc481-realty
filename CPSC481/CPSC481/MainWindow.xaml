@@ -33,10 +33,8 @@
             </Setter>
         </Style>
         
-       
-        
         <DataTemplate x:Key="HouseTemplate">
-            <StackPanel Margin="3" Orientation="Horizontal" Height="Auto" Width="Auto">
+            <StackPanel Margin="2" Orientation="Horizontal" Height="Auto" Width="Auto">
                 <StackPanel Margin="0">
                     <Border BorderThickness="2" BorderBrush="WhiteSmoke">
                         <Image Height="Auto" Width="Auto" MaxWidth="75" MaxHeight="75" Margin="0" Source="resources\house.jpg"/>
@@ -66,23 +64,26 @@
                     </StackPanel>-->
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right">
-                    <Button Name="viewDetails" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Click="viewDetails" Content="More Information" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <Button Name="viewDetails" Style="{StaticResource ButtonStyle}" Click="viewDetails" Content="More Information" />
+                    <Button Name="viewGallery" Style="{StaticResource ButtonStyle}" Click="viewGallery" Content="View Gallery"/>
                     <Button Name="addToFavs" Style="{StaticResource ButtonStyle}" Click="addToFavs" Content="Add to Favourites"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+        
+        
     </Window.Resources>
        
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*" />
-            <ColumnDefinition Width="40*" />
-            <ColumnDefinition Width="35*" />
+            <ColumnDefinition Width="24*" />
+            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="38*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="49*"/>
+            <RowDefinition Height="47*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="48*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         
         <Border BorderThickness="0,3,0,3" Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Name="midBorder">
@@ -111,37 +112,77 @@
                 </LinearGradientBrush>
             </Border.BorderBrush>
             <StackPanel Margin="0,35,0,0" Name="stackPanel1" Grid.RowSpan="3">
-                
                 <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Listing Type" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Button Style="{StaticResource ButtonStyle}" BorderBrush="Transparent" Background="Transparent" BorderThickness="0">
-                            <Image Margin="0,0,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand"/>
-                    </Button>
+                    <TextBlock Text="Listing Type" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Margin="0,7,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand"/>
                 </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="10,0,10,5">
+                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
                     <ListBoxItem>Residential</ListBoxItem>
                     <ListBoxItem>Recreational</ListBoxItem>
                     <ListBoxItem>Agricultural</ListBoxItem>
                     <ListBoxItem>Commercial</ListBoxItem>
                     <ListBoxItem>Land</ListBoxItem>
                 </ListBox>
-                
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Price Range" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Margin="0,0,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" MouseDown="priceInfo_MouseDown"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="10,0,10,5"/>
-                    <TextBlock Text="To" Margin="0,5,0,5" FontSize="14" FontWeight="Bold"/>
-                    <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="10,0,10,5"/>
-                </StackPanel>
-                
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Building Type"  Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,0,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <TextBlock Text="Area" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
                 </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="10,0,10,5" ToolTip="House Type">
+                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
+                    <ListBoxItem>NW</ListBoxItem>
+                    <ListBoxItem>NE</ListBoxItem>
+                    <ListBoxItem>SW</ListBoxItem>
+                    <ListBoxItem>SE</ListBoxItem>
+                </ListBox>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Price Range" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Margin="0,7,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Name="priceLow" SelectedValue="{Binding Path=priceRangeLow}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="80" Margin="5,2,5,0">
+                        <ComboBoxItem>$150,000</ComboBoxItem>
+                        <ComboBoxItem>$200,000</ComboBoxItem>
+                        <ComboBoxItem>$250,000</ComboBoxItem>
+                        <ComboBoxItem>$300,000</ComboBoxItem>
+                        <ComboBoxItem>$350,000</ComboBoxItem>
+                        <ComboBoxItem>$400,000</ComboBoxItem>
+                        <ComboBoxItem>$450,000</ComboBoxItem>
+                        <ComboBoxItem>$500,000</ComboBoxItem>
+                        <ComboBoxItem>$600,000</ComboBoxItem>
+                        <ComboBoxItem>$700,000</ComboBoxItem>
+                        <ComboBoxItem>$800,000</ComboBoxItem>
+                        <ComboBoxItem>$900,000</ComboBoxItem>
+                        <ComboBoxItem>$1,000,000</ComboBoxItem>
+                        <ComboBoxItem>$1,500,000</ComboBoxItem>
+                        <ComboBoxItem>$2,000,000</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Text="to" Margin="0,2,0,5" FontSize="14" FontWeight="Bold"/>
+                    <ComboBox Name="priceHigh" SelectedValue="{Binding Path=priceRangeHigh}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="80" Height="Auto" Width="Auto" Margin="5,2,5,0">
+                        <ComboBoxItem>$150,000</ComboBoxItem>
+                        <ComboBoxItem>$200,000</ComboBoxItem>
+                        <ComboBoxItem>$250,000</ComboBoxItem>
+                        <ComboBoxItem>$300,000</ComboBoxItem>
+                        <ComboBoxItem>$350,000</ComboBoxItem>
+                        <ComboBoxItem>$400,000</ComboBoxItem>
+                        <ComboBoxItem>$450,000</ComboBoxItem>
+                        <ComboBoxItem>$500,000</ComboBoxItem>
+                        <ComboBoxItem>$600,000</ComboBoxItem>
+                        <ComboBoxItem>$700,000</ComboBoxItem>
+                        <ComboBoxItem>$800,000</ComboBoxItem>
+                        <ComboBoxItem>$900,000</ComboBoxItem>
+                        <ComboBoxItem>$1,000,000</ComboBoxItem>
+                        <ComboBoxItem>$1,500,000</ComboBoxItem>
+                        <ComboBoxItem>$2,000,000</ComboBoxItem>
+                        <ComboBoxItem>Unlimited</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Building Type"  Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                </StackPanel>
+                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,5" ToolTip="House Type">
                     <ListBoxItem>No Preference</ListBoxItem>
                     <ListBoxItem>House</ListBoxItem>
                     <ListBoxItem>Aparment</ListBoxItem>
@@ -155,39 +196,102 @@
                 </ListBox>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Size (Sq. Ft.)" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="Size (Sq. Ft.)" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="10,0,10,5"/>
-                    <TextBlock Text="To" Margin="0,5,0,5" FontSize="14" FontWeight="Bold"/>
-                    <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="10,0,10,5"/>
+                    <ComboBox HorizontalAlignment="Stretch" SelectedValue="{Binding Path=sizeRangeLow}" MinWidth="80"  VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="5,2,5,0">
+                        <ComboBoxItem>300</ComboBoxItem>
+                        <ComboBoxItem>400</ComboBoxItem>
+                        <ComboBoxItem>500</ComboBoxItem>
+                        <ComboBoxItem>600</ComboBoxItem>
+                        <ComboBoxItem>700</ComboBoxItem>
+                        <ComboBoxItem>800</ComboBoxItem>
+                        <ComboBoxItem>900</ComboBoxItem>
+                        <ComboBoxItem>1000</ComboBoxItem>
+                        <ComboBoxItem>1200</ComboBoxItem>
+                        <ComboBoxItem>1400</ComboBoxItem>
+                        <ComboBoxItem>1600</ComboBoxItem>
+                        <ComboBoxItem>1800</ComboBoxItem>
+                        <ComboBoxItem>2000</ComboBoxItem>
+                        <ComboBoxItem>2500</ComboBoxItem>
+                        <ComboBoxItem>3000</ComboBoxItem>
+                        <ComboBoxItem>3500</ComboBoxItem>
+                        <ComboBoxItem>4000</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Text="to" Margin="0,2,0,5" FontSize="14" FontWeight="Bold"/>
+                    <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedValue="{Binding Path=sizeRangeHigh}" MinWidth="80" Height="Auto" Width="Auto" Margin="5,2,5,0">
+                        <ComboBoxItem>300</ComboBoxItem>
+                        <ComboBoxItem>400</ComboBoxItem>
+                        <ComboBoxItem>500</ComboBoxItem>
+                        <ComboBoxItem>600</ComboBoxItem>
+                        <ComboBoxItem>700</ComboBoxItem>
+                        <ComboBoxItem>800</ComboBoxItem>
+                        <ComboBoxItem>900</ComboBoxItem>
+                        <ComboBoxItem>1000</ComboBoxItem>
+                        <ComboBoxItem>1200</ComboBoxItem>
+                        <ComboBoxItem>1400</ComboBoxItem>
+                        <ComboBoxItem>1600</ComboBoxItem>
+                        <ComboBoxItem>1800</ComboBoxItem>
+                        <ComboBoxItem>2000</ComboBoxItem>
+                        <ComboBoxItem>2500</ComboBoxItem>
+                        <ComboBoxItem>3000</ComboBoxItem>
+                        <ComboBoxItem>3500</ComboBoxItem>
+                        <ComboBoxItem>4000</ComboBoxItem>
+                        <ComboBoxItem>Unlimited</ComboBoxItem>
+                    </ComboBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Storeys" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="Bedrooms" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
                 </StackPanel>
-                <ComboBox HorizontalAlignment="Stretch" Margin="10,0,10,5"  ToolTip="Price Range">
+                <ComboBox HorizontalAlignment="Left" Margin="5,2,5,0" SelectedValue="{Binding Path=numBedrooms}" MinWidth="80" Width="80" ToolTip="Price Range">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>1 or more</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>2 or more</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>3 or more</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>4 or more</ComboBoxItem>
+                    <ComboBoxItem>Any</ComboBoxItem>
                 </ComboBox>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Bedrooms" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="Bathrooms" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
                 </StackPanel>
-                <ComboBox HorizontalAlignment="Stretch" Margin="10,0,10,5" ToolTip="Price Range">
+                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="5,2,5,0" SelectedValue="{Binding Path=numBathrooms}" MinWidth="80" Width="80" ToolTip="Price Range">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>1 or more</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>2 or more</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>3 or more</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>4 or more</ComboBoxItem>
+                    <ComboBoxItem>Any</ComboBoxItem>
                 </ComboBox>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Bathrooms" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="Features" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
                 </StackPanel>
-                <ComboBox HorizontalAlignment="Stretch" Margin="10,0,10,5" ToolTip="Price Range">
-                </ComboBox>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Features" Margin="10,5,5,0" FontSize="14" FontWeight="Bold"/>
-                </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="75" Margin="10,0,10,5">
+                <ListBox HorizontalAlignment="Stretch" Height="75" Margin="5,2,5,0" SelectedValue="{Binding Path=features}">
+                    <ListBoxItem>Garage</ListBoxItem>
+                    <ListBoxItem>A/C</ListBoxItem>
+                    <ListBoxItem>Pool</ListBoxItem>
+                    <ListBoxItem>Fireplace</ListBoxItem>
                 </ListBox>
 
-                <Button Style="{StaticResource ButtonStyle}" Margin="5,0,0,0" Grid.Column="2" Click="clickSearch">Search</Button>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="List Date" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
+                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                </StackPanel>
+                <DatePicker HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="5,2,5,0"/>
+
+                <Button Style="{StaticResource ButtonStyle}" Margin="5,10,5,5" Width="80" Grid.Column="2" Click="clickSearch">Search</Button>
             </StackPanel>
         </Border>
 
