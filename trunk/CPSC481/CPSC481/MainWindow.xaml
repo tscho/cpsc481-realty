@@ -85,7 +85,6 @@
             <RowDefinition Height="3*"/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
-        
         <Border BorderThickness="0,3,0,3" Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Name="midBorder">
             <Border.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -317,9 +316,12 @@
                     <GradientStop Color="DarkGray" Offset="1" />
                 </LinearGradientBrush>
             </Border.BorderBrush>
-            <ListBox Name="favourites" Margin="0,35,0,0" ItemsSource="{Binding}" ItemTemplate="{StaticResource HouseTemplate}" ItemContainerStyle="{StaticResource HouseItem}" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Background="Transparent">
-            </ListBox>
+            <DockPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3">
+                <ListBox Name="favourites" Margin="0,35,0,0" ItemsSource="{Binding}" ItemTemplate="{StaticResource HouseTemplate}" ItemContainerStyle="{StaticResource HouseItem}" Background="Transparent" DockPanel.Dock="Top">
+                </ListBox>
+                <Button Style="{StaticResource ButtonStyle}" Margin="5,10,5,18" Width="150" Grid.Column="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Click="clickViewings">Request Viewings</Button>
+            </DockPanel>
         </Border>
-
+        <!--<Border Name="mask" Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="0" Opacity=".5" Background="Black" Visibility="Hidden" Panel.ZIndex="100" />-->
     </Grid>
 </Window>
