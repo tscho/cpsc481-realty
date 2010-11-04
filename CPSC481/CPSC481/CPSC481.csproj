@@ -67,6 +67,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfirmationControl.xaml.cs">
+      <DependentUpon>ConfirmationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContactInfo.cs" />
+    <Compile Include="ContactInfoControl.xaml.cs">
+      <DependentUpon>ContactInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DetailGalleryControl.xaml.cs">
+      <DependentUpon>DetailGalleryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="House.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -98,6 +108,18 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ConfirmationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContactInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DetailGalleryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

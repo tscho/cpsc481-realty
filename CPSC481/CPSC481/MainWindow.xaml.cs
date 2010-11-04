@@ -133,7 +133,7 @@ namespace CPSC481
         private void viewDetails(object sender, RoutedEventArgs e)
         {
             var house = (House)((Button)sender).DataContext;
-            Modal modal = new Modal(house);
+            Modal modal = new Modal(new DetailGalleryControl(house));
             modal.Owner = this;
             modal.ShowDialog();
         }
@@ -150,6 +150,18 @@ namespace CPSC481
         private void viewGallery(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void clickViewings(object sender, RoutedEventArgs e)
+        {
+            var info = new ContactInfo();
+            Modal modal = new Modal();
+            modal.setModalControl(new ContactInfoControl(modal, info));
+            modal.Owner = this;
+            modal.ShowDialog();
+            modal = new Modal(new ConfirmationControl());
+            modal.Owner = this;
+            modal.ShowDialog();
         }
     }
 }

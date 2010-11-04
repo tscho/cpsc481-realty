@@ -20,11 +20,21 @@ namespace CPSC481
     {
         private bool willClose;
 
-        public Modal(House houseToDisplay)
+        public Modal()
         {
             InitializeComponent();
-            willClose = false;
-            detailGrid.DataContext = houseToDisplay;
+        }
+
+        public Modal(UserControl control) : this()
+        {
+            setModalControl(control);
+        }
+
+        public void setModalControl(UserControl control)
+        {
+            Grid.SetRow(control, 1);
+            control.Margin = new Thickness(18, 0, 18, 18);
+            grid.Children.Add(control);
         }
 
         private void Close_MouseDown(object sender, MouseButtonEventArgs e)

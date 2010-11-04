@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="CPSC481.DetailGalleryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             >
+    <TabControl Grid.Row="1" HorizontalAlignment="Left" Name="modalTabs" VerticalAlignment="Top" Width="500" Height="300">
+        <TabItem Header="Details" Name="detailsTab" Width="200">
+            <Grid Grid.Row="1" Name="detailGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0" Source="resources\house.jpg" Grid.RowSpan="3"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=address}" FontWeight="Bold" FontSize="24"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=price}" FontWeight="Bold" FontSize="24"></TextBlock>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Gallery" Name="galleryTab" Width="200">
+            
+        </TabItem>
+    </TabControl>
+</UserControl>
