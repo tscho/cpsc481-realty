@@ -11,12 +11,12 @@
                 <RowDefinition Height="18"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Name="CloseBtn" BorderThickness="2,0,0,2" HorizontalAlignment="Right" BorderBrush="Silver" Width="32" Height="18"
+            <Border Name="CloseBtn" BorderThickness="2,0,0,2" HorizontalAlignment="Right" BorderBrush="Silver" Width="42" Height="18"
                     VerticalAlignment="Top" Background="Transparent" CornerRadius="0,14,0,0"
                     MouseDown="Close_MouseDown"
                     MouseEnter="CloseBtn_MouseEnter"
                     MouseLeave="CloseBtn_MouseLeave" MouseUp="CloseBtn_MouseUp">
-                <TextBlock Foreground="White" TextAlignment="Center">X</TextBlock>
+                <TextBlock Foreground="White" TextAlignment="Center">Close</TextBlock>
             </Border>
             <UserControl Name="control" Margin="14,0,14,14"/>
         </Grid>

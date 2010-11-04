@@ -24,5 +24,12 @@ namespace CPSC481
             this.DataContext = houseToDisplay;
             InitializeComponent();
         }
+
+        public DetailGalleryControl(House houseToDisplay, int tabIndex)
+            : this(houseToDisplay)
+        {
+            modalTabs.SelectedIndex = tabIndex;
+        }
+
     }
 }

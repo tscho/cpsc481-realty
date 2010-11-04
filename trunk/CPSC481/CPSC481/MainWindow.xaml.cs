@@ -30,11 +30,12 @@ namespace CPSC481
         {
             InitializeComponent();
 
-            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
-            results.Add(new House("300", "Meredith Road", "NE", "Brentwood,", "Calgary, ", "Alberta", "$400,000", "2", "2"));
-            results.Add(new House("2508", "Centre Street", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
-            results.Add(new House("12", "Cheyenne Crescent", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
-            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2"));
+            string desc = "Treat yourself to a bright, lovely and well maintained 2 storey condo in charming Bow Ridge Landing. This home is an end unit with an extra main floor window to let in the natural light. The cosy kitchen has oak cupboards and laminate counter tops with a ceramic tile backsplash in calm, neutral tones. From the kitchen, a back door leads to a huge deck surrounded by lots of grass and trees, creating a private place to enjoy the outdoors. A living/dining room and 2 piece bathroom with stacked washer and dryer complete the main level. Upstairs there are 3 spacious bedrooms and a 4 piece bathroom. The master bedroom has a 4 piece ensuite and walk-in closet. The basement is partially developed with plenty of storage shelves and a workbench. There is an attached single car garage long enough to contain another work bench. The drive way is generous enough to park another car. What are you waiting for? View this home today!";
+            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
+            results.Add(new House("300", "Meredith Road", "NE", "Brentwood,", "Calgary, ", "Alberta", "$400,000", "2", "2", desc));
+            results.Add(new House("2508", "Centre Street", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
+            results.Add(new House("12", "Cheyenne Crescent", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
+            results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
 
             searchResults.ItemsSource = results;
             favourites.ItemsSource = results;
@@ -149,7 +150,10 @@ namespace CPSC481
 
         private void viewGallery(object sender, RoutedEventArgs e)
         {
-
+            var house = (House)((Button)sender).DataContext;
+            Modal modal = new Modal(new DetailGalleryControl(house, 1));
+            modal.Owner = this;
+            modal.ShowDialog();
         }
 
         private void clickViewings(object sender, RoutedEventArgs e)
