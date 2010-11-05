@@ -323,5 +323,22 @@
             </DockPanel>
         </Border>
         <!--<Border Name="mask" Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="0" Opacity=".5" Background="Black" Visibility="Hidden" Panel.ZIndex="100" />-->
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left" Foreground="White"> Page: &lt;</TextBlock>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="4,0,4,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Border BorderBrush="Orange" BorderThickness="2">
+                    <TextBlock VerticalAlignment="Center" Foreground="White">1</TextBlock>
+                </Border>
+                <TextBlock VerticalAlignment="Center" Foreground="White">2</TextBlock>
+                <TextBlock VerticalAlignment="Center" Foreground="White">3</TextBlock>
+                <TextBlock VerticalAlignment="Center" Foreground="White">4</TextBlock>
+            </StackPanel>
+        </DockPanel>
+        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right" Foreground="White">&gt; </TextBlock>
     </Grid>
 </Window>
