@@ -36,7 +36,6 @@ namespace CPSC481
             results.Add(new House("2508", "Centre Street", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
             results.Add(new House("12", "Cheyenne Crescent", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
             results.Add(new House("2708", "Conrad Drive", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
-
             searchResults.ItemsSource = results;
             favourites.ItemsSource = results;
         }
@@ -71,26 +70,18 @@ namespace CPSC481
 
         }
 
-
-
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        private void removeMarkers()
         {
-            //if (e.Key == Key.Enter)
-                //Search_Click(sender, null);
-        }
-
-        private void clickStoreystInfo(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void clickSquareFeetInfo(object sender, RoutedEventArgs e)
-        {
+                XElement call = new XElement("invoke",
+                   new XAttribute("name", "remove"),
+                   new XAttribute("returntype", "xml")
+               );
+                axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting)); 
         }
 
         private void clickSearch(object sender, RoutedEventArgs e)
-        {            
-            foreach(House currHome in results)
+        {
+            foreach (House currHome in results)
             {
                 XElement call = new XElement("invoke",
                    new XAttribute("name", "add"),
@@ -105,6 +96,43 @@ namespace CPSC481
                );
                 axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
             }
+
+            XElement callArea = new XElement("invoke",
+                   new XAttribute("name", "area"),
+                   new XAttribute("returntype", "xml"),
+                   new XElement("arguments",
+                       new XElement("string", "NW")
+                   )
+            );
+            axFlash.CallFunction(callArea.ToString(SaveOptions.DisableFormatting));
+
+        }
+
+        private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = e.AddedItems[0] as House;
+            if (item == null) return;
+
+            XElement call = new XElement("invoke",
+                   new XAttribute("name", "centre"),
+                   new XAttribute("returntype", "xml"),
+                   new XElement("arguments",
+                       new XElement("string", item.address)
+                   )
+            );
+            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+            
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (e.Key == Key.Enter)
+                //Search_Click(sender, null);
+        }
+
+        private void clickSquareFeetInfo(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void clickBedroomsInfo(object sender, RoutedEventArgs e)
@@ -116,27 +144,8 @@ namespace CPSC481
 
         }
 
-        private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void priceInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = e.AddedItems[0] as House;
-            if(item == null) return;
-
-            XElement call = new XElement("invoke",
-                   new XAttribute("name", "set"),
-                   new XAttribute("returntype", "xml"),
-                   new XElement("arguments",
-                       new XElement("string", item.address)
-                   )
-            );
-            //axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
-        }
-
-        private void viewDetails(object sender, RoutedEventArgs e)
-        {
-            var house = (House)((Button)sender).DataContext;
-            Modal modal = new Modal(new DetailGalleryControl(house));
-            modal.Owner = this;
-            modal.ShowDialog();
         }
 
         private void addToFavs(object sender, RoutedEventArgs e)
@@ -144,8 +153,14 @@ namespace CPSC481
 
         }
 
-        private void priceInfo_MouseDown(object sender, MouseButtonEventArgs e)
+        private void viewDetails(object sender, RoutedEventArgs e)
         {
+            removeMarkers();
+            var house = (House)((Button)sender).DataContext;
+            Modal modal = new Modal(new DetailGalleryControl(house));
+            modal.Owner = this;
+            modal.ShowDialog();
+
         }
 
         private void viewGallery(object sender, RoutedEventArgs e)
