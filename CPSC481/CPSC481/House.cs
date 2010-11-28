@@ -6,6 +6,9 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 using System.Web;
+using System.Collections.Generic;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace CPSC481
 {
@@ -27,9 +30,10 @@ namespace CPSC481
         //public GeocoderLocation LatLng;
         public string Longitude { get; set; }
         public string Latitude { get; set; }
+        public List<Image> Photos { get; private set; }
         private LatLngAccurateToTypes _LatLngAccuracy = 0;
        
-        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms, string detailText)
+        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms, string detailText, params string[] imagePaths)
         {
             this.address = houseNumber + " " + street + " " + quandrant;
             this.houseNumber = houseNumber;
@@ -43,6 +47,11 @@ namespace CPSC481
             this.bathrooms = bathrooms;
             this.bedrooms = bedrooms;
             this.detailText = detailText;
+            this.Photos = new List<Image>();
+            foreach (string imagePath in imagePaths)
+            {
+                Photos.Add(new Image() { Source = new BitmapImage(new Uri(imagePath)) });
+            }
             GeoCode();
         }
 

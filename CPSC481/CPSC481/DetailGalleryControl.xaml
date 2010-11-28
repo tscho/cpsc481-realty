@@ -37,7 +37,7 @@
                 </StackPanel>
             </Grid>
         </TabItem>
-        <TabItem Header="Gallery" Name="galleryTab" Width="200">
+        <TabItem Header="Photo Gallery" Name="galleryTab" Width="200">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4*"/>
