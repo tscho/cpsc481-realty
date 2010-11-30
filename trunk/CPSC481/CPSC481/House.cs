@@ -6,13 +6,9 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 using System.Web;
-<<<<<<< .mine
-using System.Collections.Generic;
-=======
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
->>>>>>> .r19
 
 namespace CPSC481
 {
@@ -47,11 +43,7 @@ namespace CPSC481
         public List<Image> Photos { get; private set; }
         private LatLngAccurateToTypes _LatLngAccuracy = 0;
        
-<<<<<<< .mine
         public House(String houseNumber, String street, Quadrant quadrant, String area, String city, String province, decimal price, int bedrooms, int bathrooms, string detailText, string mainImage, List<string> images, int squarefeet, Features houseFeatures, ListingType houseListingType, BuildingType houseBuildingType)
-=======
-        public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms, string detailText, params string[] imagePaths)
->>>>>>> .r19
         {
             this.address = houseNumber + " " + street + " " + Enum.GetName(typeof(Quadrant), quadrant);
             this.houseNumber = houseNumber;
@@ -64,20 +56,12 @@ namespace CPSC481
             this.bathrooms = bathrooms;
             this.bedrooms = bedrooms;
             this.detailText = detailText;
-<<<<<<< .mine
             this.mainImage = mainImage;
             this.images = images;
             this.squareFeet = squarefeet;
             this.features = houseFeatures;
             this.listingType = houseListingType;
             this.buildingType = houseBuildingType;
-=======
-            this.Photos = new List<Image>();
-            foreach (string imagePath in imagePaths)
-            {
-                Photos.Add(new Image() { Source = new BitmapImage(new Uri(imagePath)) });
-            }
->>>>>>> .r19
             GeoCode();
         }
 
