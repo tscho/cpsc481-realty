@@ -2,8 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        xmlns:ax="clr-namespace:AxShockwaveFlashObjects;assembly=AxInterop.ShockwaveFlashObjects"
-        Loaded="WindowLoaded" Title="Home Finder" Height="768" Width="1024" MinHeight="768" MinWidth="1024">
+        xmlns:ax="clr-namespace:AxShockwaveFlashObjects;assembly=AxInterop.ShockwaveFlashObjects" xmlns:CPSC481="clr-namespace:CPSC481" Loaded="WindowLoaded" Title="Home Finder" Height="768" Width="1024" MinHeight="768" MinWidth="1024" MaxHeight="768" MaxWidth="1024">
     <Window.Background>
         <!--<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="White" Offset="0" />
@@ -12,6 +11,37 @@
         <SolidColorBrush Color="Gray"/>
     </Window.Background>
     <Window.Resources>
+        <ItemsPanelTemplate x:Key="HorizontalPages">
+            <StackPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+
+        <DataTemplate x:Key="pagesItemTemplate" DataType="CPSC481.DataItem">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=Display}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+        <ObjectDataProvider x:Key="pages" ObjectType="{x:Type CPSC481:DataItem}"/>
+
+        <Style x:Key="ToolTipStyle" TargetType="ToolTip">
+            <Setter Property = "HorizontalOffset" Value="2"/>
+            <Setter Property = "VerticalOffset" Value="2"/>
+            <Setter Property = "Background" Value="White"/>
+            <Setter Property = "BorderThickness" Value="2"/>
+            <Setter Property = "BorderBrush" Value="Gray"/>
+            <Setter Property = "Width" Value="250"/>
+            <Setter Property = "Height" Value="Auto"/>
+            <Setter Property = "Margin" Value="2"/>
+        </Style>
+        
+        <Style x:Key="InfoImageStyle" TargetType="Image">
+            <Setter Property="Margin" Value="0,7,0,0"/>
+            <Setter Property="Height" Value="15"/>
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Source"  Value="Resources\help.png"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        
         <Style x:Key="HouseItem" TargetType="ListBoxItem">
             <Style.Resources>
                 <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0.5,1" StartPoint="0.5,0" >
@@ -34,51 +64,137 @@
         </Style>
         
         <DataTemplate x:Key="HouseTemplate">
-            <StackPanel Margin="2" Orientation="Horizontal" Height="Auto" Width="Auto">
-                <StackPanel Margin="0">
-                    <Border BorderThickness="2" BorderBrush="WhiteSmoke">
-                        <Image Height="Auto" Width="Auto" MaxWidth="75" MaxHeight="75" Margin="0" Source="resources\house.jpg"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="0">
-                    <StackPanel Orientation="Horizontal">
-                        <!--<TextBlock FontWeight="Bold" Text="Price: "/>-->
-                        <TextBlock Text="{Binding price}" FontWeight="ExtraBold" FontSize="14" Margin="1"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <!--<TextBlock FontWeight="Bold" Text="Address: "/>-->
+            <DockPanel>
+                <Border BorderThickness="2" BorderBrush="WhiteSmoke" DockPanel.Dock="Left" Width="87">
+                    <Image Height="Auto" Width="Auto" MaxWidth="85" MaxHeight="85" Source="{Binding mainImage}"/>
+                </Border>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical" Margin="0">
+                            <TextBlock Text="{Binding priceString}" FontWeight="ExtraBold" FontSize="14" Margin="1"/>
                         <TextBlock Text="{Binding address}" FontSize="14" Margin="1"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding area}" FontSize="14" Margin="1"/>
+                            <TextBlock Text="{Binding city}" FontSize="14" Margin="1"/>
+                            <TextBlock Text="{Binding province}" FontSize="14" Margin="1"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                            <TextBlock Text="{Binding bedrooms}" FontSize="14" Margin="1"/>
+                            <TextBlock Text=" Bedroom(s), " FontSize="14" Margin="1"/>
+                            <TextBlock Text="{Binding bathrooms}" FontSize="14" Margin="1"/>
+                            <TextBlock Text=" Bathroom(s)" FontSize="14" Margin="1"/>
+                        </StackPanel>
                     </StackPanel>
+                </StackPanel>
+
+                <StackPanel Width="25" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                        <Button Margin ="1" Name="viewDetails" Style="{StaticResource ButtonStyle}" Click="viewDetails">
+                        <Image Height="19" Source="Resources\info.png">
+                            <Image.ToolTip>
+                                <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    View the finer details of the listing.
+                                    </TextBlock>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                        <Button Margin ="1" Name="viewGallery" Style="{StaticResource ButtonStyle}" Click="viewGallery">
+                        <Image Height="19" Source="Resources\image2.png">
+                            <Image.ToolTip>
+                                <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    View the photo gallery for the listing.
+                                    </TextBlock>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                        <Button  Margin ="1" Name="addToFavs" Style="{StaticResource ButtonStyle}" Click="addToFavs">
+                        <Image Height="19" Source="Resources\edit_add.png">
+                            <Image.ToolTip>
+                                <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Add the listing to your favourites list to view later when you request your viewings with a realtor.
+                                    </TextBlock>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                    </StackPanel>
+            </DockPanel>
+            <!--<StackPanel Margin="2" Orientation="Horizontal" Height="Auto" Width="Auto">-->
+                
+            <!--</StackPanel>-->
+        </DataTemplate>
+
+        <DataTemplate x:Key="FavouriteHouseTemplate">
+            <StackPanel Orientation="Horizontal">
+                    <Border BorderThickness="2" BorderBrush="WhiteSmoke" VerticalAlignment="Center">
+                        <Image Height="Auto" Width="Auto" MaxWidth="85" MaxHeight="85" Margin="1" Source="{Binding mainImage}"/>
+                    </Border>
+                <StackPanel Orientation="Vertical" Margin="0" MinWidth="235px">
+                    <TextBlock Text="{Binding priceString}" FontWeight="ExtraBold" FontSize="14" Margin="1"/>
+                    <TextBlock Text="{Binding address}" FontSize="14" Margin="1"/>
                     <StackPanel Orientation="Horizontal">
-                        <!--<TextBlock FontWeight="Bold" Text="Address: "/>-->
                         <TextBlock Text="{Binding area}" FontSize="14" Margin="1"/>
                         <TextBlock Text="{Binding city}" FontSize="14" Margin="1"/>
                         <TextBlock Text="{Binding province}" FontSize="14" Margin="1"/>
                     </StackPanel>
-                    <!--<StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="Bold" Text="Address: "/>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding bedrooms}" FontSize="14" Margin="1"/>
                         <TextBlock Text=" Bedroom(s), " FontSize="14" Margin="1"/>
                         <TextBlock Text="{Binding bathrooms}" FontSize="14" Margin="1"/>
                         <TextBlock Text=" Bathroom(s)" FontSize="14" Margin="1"/>
-                    </StackPanel>-->
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Right">
-                    <Button Name="viewDetails" Style="{StaticResource ButtonStyle}" Click="viewDetails" Content="More Information" />
-                    <Button Name="viewGallery" Style="{StaticResource ButtonStyle}" Click="viewGallery" Content="View Gallery"/>
-                    <Button Name="addToFavs" Style="{StaticResource ButtonStyle}" Click="addToFavs" Content="Add to Favourites"/>
+                
+                <StackPanel>
+                    <Button Margin ="1" Name="viewDetails" Style="{StaticResource ButtonStyle}" Click="viewDetails">
+                        <Image Height="19" Source="Resources\info.png">
+                            <Image.ToolTip>
+                                <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    View the finer details of the listing.
+                                    </TextBlock>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                    <Button Margin ="1" Name="viewGallery" Style="{StaticResource ButtonStyle}" Click="viewGallery">
+                        <Image Height="19" Source="Resources\image2.png">
+                            <Image.ToolTip>
+                                <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    View the photo gallery for the listing.
+                                    </TextBlock>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
+                    <Button  Margin ="1" Name="addToFavs" Style="{StaticResource ButtonStyle}" Click="removeFromFavs">
+                        <Image Height="19" Source="Resources\edit_remove.png">
+                            <Image.ToolTip>
+                                <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Remove the listings from your favourites.
+                                    </TextBlock>
+                                </ToolTip>
+                            </Image.ToolTip>
+                        </Image>
+                    </Button>
                 </StackPanel>
             </StackPanel>
+            <!--<StackPanel Margin="2" Orientation="Horizontal" Height="Auto" Width="Auto">-->
+
+            <!--</StackPanel>-->
         </DataTemplate>
-        
-        
     </Window.Resources>
        
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24*" />
-            <ColumnDefinition Width="38*"/>
-            <ColumnDefinition Width="38*" />
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="36*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="47*"/>
@@ -111,186 +227,178 @@
                 </LinearGradientBrush>
             </Border.BorderBrush>
             <StackPanel Margin="0,35,0,0" Name="stackPanel1" Grid.RowSpan="3">
+
+                <!--====LISTING TYPE-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Listing Type" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Margin="0,7,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand"/>
+                    <Image Name="ListingTypeInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Type of listing searching for. It may be a commercial, recreational, agricultural, residentail or empty land.
+                                </TextBlock>                                
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
-                    <ListBoxItem>Residential</ListBoxItem>
-                    <ListBoxItem>Recreational</ListBoxItem>
-                    <ListBoxItem>Agricultural</ListBoxItem>
-                    <ListBoxItem>Commercial</ListBoxItem>
-                    <ListBoxItem>Land</ListBoxItem>
+                <ListBox Name="listingType" SelectionMode="Extended" DisplayMemberPath="Display" SelectedValuePath="Value" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
                 </ListBox>
-
+                <!--====LISTING TYPE-->
+                
+                <!--====AREA-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Area" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="AreaInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by the area of the city. Use this field if you would like to search a specific quandrant of the city.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
-                    <ListBoxItem>NW</ListBoxItem>
-                    <ListBoxItem>NE</ListBoxItem>
-                    <ListBoxItem>SW</ListBoxItem>
-                    <ListBoxItem>SE</ListBoxItem>
+                <ListBox Name="quandrant" SelectionMode="Extended" SelectedValuePath="Value" DisplayMemberPath="Display" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
                 </ListBox>
-
+                <!--====AREA-->
+                
+                <!--====PRICE RANGE-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Price Range" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Margin="0,7,0,0" Height="15" Width="15" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand"/>
+                    <Image Name="PriceInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by the price range. Useful if you have a budget or price range to search within.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox Name="priceLow" SelectedValue="{Binding Path=priceRangeLow}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="80" Margin="5,2,5,0">
-                        <ComboBoxItem>$150,000</ComboBoxItem>
-                        <ComboBoxItem>$200,000</ComboBoxItem>
-                        <ComboBoxItem>$250,000</ComboBoxItem>
-                        <ComboBoxItem>$300,000</ComboBoxItem>
-                        <ComboBoxItem>$350,000</ComboBoxItem>
-                        <ComboBoxItem>$400,000</ComboBoxItem>
-                        <ComboBoxItem>$450,000</ComboBoxItem>
-                        <ComboBoxItem>$500,000</ComboBoxItem>
-                        <ComboBoxItem>$600,000</ComboBoxItem>
-                        <ComboBoxItem>$700,000</ComboBoxItem>
-                        <ComboBoxItem>$800,000</ComboBoxItem>
-                        <ComboBoxItem>$900,000</ComboBoxItem>
-                        <ComboBoxItem>$1,000,000</ComboBoxItem>
-                        <ComboBoxItem>$1,500,000</ComboBoxItem>
-                        <ComboBoxItem>$2,000,000</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox Name="priceLow" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="80" Margin="5,2,5,0"/>
                     <TextBlock Text="to" Margin="0,2,0,5" FontSize="14" FontWeight="Bold"/>
-                    <ComboBox Name="priceHigh" SelectedValue="{Binding Path=priceRangeHigh}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="80" Height="Auto" Width="Auto" Margin="5,2,5,0">
-                        <ComboBoxItem>$150,000</ComboBoxItem>
-                        <ComboBoxItem>$200,000</ComboBoxItem>
-                        <ComboBoxItem>$250,000</ComboBoxItem>
-                        <ComboBoxItem>$300,000</ComboBoxItem>
-                        <ComboBoxItem>$350,000</ComboBoxItem>
-                        <ComboBoxItem>$400,000</ComboBoxItem>
-                        <ComboBoxItem>$450,000</ComboBoxItem>
-                        <ComboBoxItem>$500,000</ComboBoxItem>
-                        <ComboBoxItem>$600,000</ComboBoxItem>
-                        <ComboBoxItem>$700,000</ComboBoxItem>
-                        <ComboBoxItem>$800,000</ComboBoxItem>
-                        <ComboBoxItem>$900,000</ComboBoxItem>
-                        <ComboBoxItem>$1,000,000</ComboBoxItem>
-                        <ComboBoxItem>$1,500,000</ComboBoxItem>
-                        <ComboBoxItem>$2,000,000</ComboBoxItem>
-                        <ComboBoxItem>Unlimited</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox Name="priceHigh" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="80" Height="Auto" Width="Auto" Margin="5,2,5,0"/>
                 </StackPanel>
+                <!--====PRICE RANGE-->
 
+
+                <!--====BUILDING TYPE-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Building Type"  Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="BuildingTypeInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by building type. Use this field if you are looking for a listing that is an apartment, townhouse, house, or duplex.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,5" ToolTip="House Type">
-                    <ListBoxItem>No Preference</ListBoxItem>
-                    <ListBoxItem>House</ListBoxItem>
-                    <ListBoxItem>Aparment</ListBoxItem>
-                    <ListBoxItem>Townhouse</ListBoxItem>
-                    <ListBoxItem>Duplex</ListBoxItem>
-                    <ListBoxItem>Triplex</ListBoxItem>
-                    <ListBoxItem>Fourplex</ListBoxItem>
-                    <ListBoxItem>Multi-Family</ListBoxItem>
-                    <ListBoxItem>Special Purpose</ListBoxItem>
-                    <ListBoxItem>Mobile</ListBoxItem>
-                </ListBox>
+                <ListBox Name="buildingType" SelectionMode="Extended" SelectedValuePath="Value" DisplayMemberPath="Display" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,5" ToolTip="House Type"/>
+                <!--====BUILDING TYPE-->
 
+
+                <!--====SIZE-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Size (Sq. Ft.)" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="SquareFeetInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter search results by the house size. Use this field to look for homes that are within a range of sizes.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox HorizontalAlignment="Stretch" SelectedValue="{Binding Path=sizeRangeLow}" MinWidth="80"  VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="5,2,5,0">
-                        <ComboBoxItem>300</ComboBoxItem>
-                        <ComboBoxItem>400</ComboBoxItem>
-                        <ComboBoxItem>500</ComboBoxItem>
-                        <ComboBoxItem>600</ComboBoxItem>
-                        <ComboBoxItem>700</ComboBoxItem>
-                        <ComboBoxItem>800</ComboBoxItem>
-                        <ComboBoxItem>900</ComboBoxItem>
-                        <ComboBoxItem>1000</ComboBoxItem>
-                        <ComboBoxItem>1200</ComboBoxItem>
-                        <ComboBoxItem>1400</ComboBoxItem>
-                        <ComboBoxItem>1600</ComboBoxItem>
-                        <ComboBoxItem>1800</ComboBoxItem>
-                        <ComboBoxItem>2000</ComboBoxItem>
-                        <ComboBoxItem>2500</ComboBoxItem>
-                        <ComboBoxItem>3000</ComboBoxItem>
-                        <ComboBoxItem>3500</ComboBoxItem>
-                        <ComboBoxItem>4000</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox Name="SquareFeetLow"  DisplayMemberPath="Display" SelectedValuePath="Value" HorizontalAlignment="Stretch" SelectedIndex="0"  MinWidth="80"  VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="5,2,5,0"/>
                     <TextBlock Text="to" Margin="0,2,0,5" FontSize="14" FontWeight="Bold"/>
-                    <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedValue="{Binding Path=sizeRangeHigh}" MinWidth="80" Height="Auto" Width="Auto" Margin="5,2,5,0">
-                        <ComboBoxItem>300</ComboBoxItem>
-                        <ComboBoxItem>400</ComboBoxItem>
-                        <ComboBoxItem>500</ComboBoxItem>
-                        <ComboBoxItem>600</ComboBoxItem>
-                        <ComboBoxItem>700</ComboBoxItem>
-                        <ComboBoxItem>800</ComboBoxItem>
-                        <ComboBoxItem>900</ComboBoxItem>
-                        <ComboBoxItem>1000</ComboBoxItem>
-                        <ComboBoxItem>1200</ComboBoxItem>
-                        <ComboBoxItem>1400</ComboBoxItem>
-                        <ComboBoxItem>1600</ComboBoxItem>
-                        <ComboBoxItem>1800</ComboBoxItem>
-                        <ComboBoxItem>2000</ComboBoxItem>
-                        <ComboBoxItem>2500</ComboBoxItem>
-                        <ComboBoxItem>3000</ComboBoxItem>
-                        <ComboBoxItem>3500</ComboBoxItem>
-                        <ComboBoxItem>4000</ComboBoxItem>
-                        <ComboBoxItem>Unlimited</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox Name="SquareFeetHigh"  DisplayMemberPath="Display" SelectedValuePath="Value" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="17" MinWidth="80" Height="Auto" Width="Auto" Margin="5,2,5,0"/>
                 </StackPanel>
+                <!--====SIZE-->
 
+
+                <!--====Bedrooms-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Bedrooms" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="BedroomsInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by the number of bedrooms. Use this field if you are looking for a home with a minimum number of bedroom.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
-                <ComboBox HorizontalAlignment="Left" Margin="5,2,5,0" SelectedValue="{Binding Path=numBedrooms}" MinWidth="80" Width="80" ToolTip="Price Range">
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>1 or more</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>2 or more</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
-                    <ComboBoxItem>3 or more</ComboBoxItem>
-                    <ComboBoxItem>4</ComboBoxItem>
-                    <ComboBoxItem>4 or more</ComboBoxItem>
-                    <ComboBoxItem>Any</ComboBoxItem>
-                </ComboBox>
+                <ComboBox Name="Bedrooms" HorizontalAlignment="Left" Margin="5,2,5,0" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="0" MinWidth="80" Width="80" ToolTip="Price Range"/>
+                <!--====Bedrooms-->
 
+
+                <!--====Bathrooms-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Bathrooms" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="BathroomsInfo"  ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by the number of bathrooms. Use this field if you are looking for a home with a minimum number of bathrooms.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
-                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="5,2,5,0" SelectedValue="{Binding Path=numBathrooms}" MinWidth="80" Width="80" ToolTip="Price Range">
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>1 or more</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>2 or more</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
-                    <ComboBoxItem>3 or more</ComboBoxItem>
-                    <ComboBoxItem>4</ComboBoxItem>
-                    <ComboBoxItem>4 or more</ComboBoxItem>
-                    <ComboBoxItem>Any</ComboBoxItem>
+                <ComboBox Name="Bathrooms" HorizontalAlignment="Left"  DisplayMemberPath="Display" SelectedValuePath="Value" VerticalAlignment="Stretch" SelectedIndex="0" Margin="5,2,5,0" MinWidth="80" Width="80" ToolTip="Price Range">
                 </ComboBox>
+                <!--====Bathrooms-->
 
+                <!--====Features-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Features" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="FeaturesInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by specific unique features. Use this field if you are looking for a home with certain features such as a fireplace, pool, garage, or A/C.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
-                <ListBox HorizontalAlignment="Stretch" Height="75" Margin="5,2,5,0" SelectedValue="{Binding Path=features}">
-                    <ListBoxItem>Garage</ListBoxItem>
-                    <ListBoxItem>A/C</ListBoxItem>
-                    <ListBoxItem>Pool</ListBoxItem>
-                    <ListBoxItem>Fireplace</ListBoxItem>
-                </ListBox>
+                <ListBox Name="Feature" HorizontalAlignment="Stretch" SelectionMode="Extended" Height="75" Margin="5,2,5,0" SelectedValue="{Binding Path=features}" DisplayMemberPath="Display" SelectedValuePath="Value"/>
+                <!--====Features-->
 
+
+                <!--====Date-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="List Date" Margin="5,5,5,0" FontSize="14" FontWeight="Bold"/>
-                    <Image Height="15" Width="15" Margin="0,7,0,0" Source="resources\info.png" ToolTip="Prince Range Help" Cursor="Hand" />
+                    <Image Name="DateInfo" ToolTipService.ShowDuration="120000" Style="{StaticResource InfoImageStyle}">
+                        <Image.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Filter the search results by listing date. Use this field to limit the search criteria to only new listings after a specificied date.
+                                </TextBlock>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
                 </StackPanel>
                 <DatePicker HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="5,2,5,0"/>
-
-                <Button Style="{StaticResource ButtonStyle}" Margin="5,10,5,5" Width="80" Grid.Column="2" Click="clickSearch">Search</Button>
+                <!--====Date-->
+                
+                
+                <Button Style="{StaticResource ButtonStyle}" Margin="5,10,5,5" Width="80" Grid.Column="2" Click="clickSearch">
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                            <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Select to initiate a new search with the above search criteria.
+                            </TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                    Search
+                </Button>
             </StackPanel>
         </Border>
 
@@ -301,14 +409,10 @@
                     <GradientStop Color="DarkGray" Offset="1" />
                 </LinearGradientBrush>
             </Border.BorderBrush>
-
-
-         <ListBox Name="searchResults" SelectionChanged="searchResults_SelectionChanged"  VerticalAlignment="Stretch" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource HouseItem}" ItemTemplate="{StaticResource HouseTemplate}" Grid.Column="1" Grid.Row="2" > 
-            <ListBox.Background>
-                <SolidColorBrush />
-            </ListBox.Background>
-        </ListBox>
+            <ListBox Name="searchResults" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="searchResults_SelectionChanged"  VerticalAlignment="Stretch" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource HouseItem}" ItemTemplate="{StaticResource HouseTemplate}" Background="Transparent" Grid.Column="1" Grid.Row="2" >
+         </ListBox>
         </Border>
+        
         <Border Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" BorderThickness="3,0,0,0">
             <Border.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -317,28 +421,44 @@
                 </LinearGradientBrush>
             </Border.BorderBrush>
             <DockPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3">
-                <ListBox Name="favourites" Margin="0,35,0,0" ItemsSource="{Binding}" ItemTemplate="{StaticResource HouseTemplate}" ItemContainerStyle="{StaticResource HouseItem}" Background="Transparent" DockPanel.Dock="Top">
+                <ListBox Name="favourites"  Margin="0,35,0,0" SelectionChanged="favourites_SelectionChanged" ItemsSource="{Binding}" ItemTemplate="{StaticResource FavouriteHouseTemplate}" ItemContainerStyle="{StaticResource HouseItem}" Background="Transparent" DockPanel.Dock="Top">
                 </ListBox>
-                <Button Style="{StaticResource ButtonStyle}" Margin="5,10,5,18" Width="150" Grid.Column="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Click="clickViewings">Request Viewings</Button>
+                <Button Style="{StaticResource ButtonStyle}" Margin="5,10,5,18" Width="150" Grid.Column="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Click="clickViewings">
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipStyle}" Width="220">
+                            <TextBlock TextAlignment="Left" TextWrapping="Wrap">
+                                    Select to send your favourites list to a realtor to view the listings.
+                            </TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                    Request Viewings
+                </Button>
             </DockPanel>
         </Border>
-        <!--<Border Name="mask" Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="0" Opacity=".5" Background="Black" Visibility="Hidden" Panel.ZIndex="100" />-->
-        <DockPanel Grid.Column="1" Grid.Row="1">
-            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left" Foreground="White"> Page: &lt;</TextBlock>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Bottom">
+        
+        
+        <!--Paging-->
+        <DockPanel Grid.Column="1" Grid.Row="1" ClipToBounds="True">
+            <Button Click="previousPage" Margin="2,0,0,0" Width="Auto" DockPanel.Dock="Left">
+                &lt; Prev Page
+            </Button>
+
+            <ListBox Name="listBoxPages" SelectedIndex="0" ItemTemplate="{StaticResource pagesItemTemplate}" ItemsPanel="{StaticResource HorizontalPages}" ItemsSource="{Binding Source={StaticResource pages}}">
+                
+            </ListBox>
+            <!--<StackPanel Name="pagesPanel" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Center" Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Margin" Value="4,0,4,0"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Foreground" Value="White"/>
                     </Style>
                 </StackPanel.Resources>
-                <Border BorderBrush="Orange" BorderThickness="2">
-                    <TextBlock VerticalAlignment="Center" Foreground="White">1</TextBlock>
-                </Border>
-                <TextBlock VerticalAlignment="Center" Foreground="White">2</TextBlock>
-                <TextBlock VerticalAlignment="Center" Foreground="White">3</TextBlock>
-                <TextBlock VerticalAlignment="Center" Foreground="White">4</TextBlock>
-            </StackPanel>
+            </StackPanel>-->
+            <Button Click="nextPage" Margin="0,0,2,0" Width="Auto" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                Next Page &gt;
+            </Button>
         </DockPanel>
-        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right" Foreground="White">&gt; </TextBlock>
+        <!--Paging-->
     </Grid>
 </Window>

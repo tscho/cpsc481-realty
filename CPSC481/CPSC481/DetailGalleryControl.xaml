@@ -18,9 +18,9 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0" Source="resources\house.jpg" Grid.RowSpan="3"/>
+                <Image Height="Auto" Width="Auto" HorizontalAlignment="Left" Margin="0" Source="{Binding mainImage}" Grid.RowSpan="3"/>
                 <TextBlock Grid.Column="1" Text="{Binding Path=address}" FontWeight="Bold" FontSize="24"></TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=price}" FontWeight="Bold" FontSize="24"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=priceString}" FontWeight="Bold" FontSize="24"></TextBlock>
                 <Button Grid.Column="1" Grid.Row="2" Width="140" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}">Add To Favourites</Button>
                 <StackPanel Orientation="Vertical" Grid.Row="3" Grid.ColumnSpan="2">
                     <StackPanel Orientation="Horizontal">

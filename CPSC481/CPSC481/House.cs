@@ -6,9 +6,13 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 using System.Web;
+<<<<<<< .mine
+using System.Collections.Generic;
+=======
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+>>>>>>> .r19
 
 namespace CPSC481
 {
@@ -17,41 +21,63 @@ namespace CPSC481
     {
         public String houseNumber { get; set; }
         public String street { get; set; }
-        public String quadrant { get; set; }
+        public Quadrant quadrant { get; set; }
         public String address { get; set; }
-        public String price { get; set; }
-        public String area { get; set; }
+        public decimal price { get; set; }
+        public string priceString
+        {
+            get { return String.Format("{0:C}", price); }
+        }
+        public string area { get; set; }
         public String city { get; set; }
         public String province { get; set; }
-        public String source { get; set;}
-        public String bedrooms { get; set; }
-        public String bathrooms { get; set; }
+        public int squareFeet { get; set; }
+        //public String source { get; set;}
+        public int bedrooms { get; set; }
+        public int bathrooms { get; set; }
         public String detailText { get; set; }
+        public string mainImage { get; set; }
+        public List<string> images { get; set; }
+        public BuildingType buildingType;
+        public Features features;
+        public ListingType listingType;
         //public GeocoderLocation LatLng;
         public string Longitude { get; set; }
         public string Latitude { get; set; }
         public List<Image> Photos { get; private set; }
         private LatLngAccurateToTypes _LatLngAccuracy = 0;
        
+<<<<<<< .mine
+        public House(String houseNumber, String street, Quadrant quadrant, String area, String city, String province, decimal price, int bedrooms, int bathrooms, string detailText, string mainImage, List<string> images, int squarefeet, Features houseFeatures, ListingType houseListingType, BuildingType houseBuildingType)
+=======
         public House(String houseNumber, String street, String quandrant, String area, String city, String province, String price, String bedrooms, String bathrooms, string detailText, params string[] imagePaths)
+>>>>>>> .r19
         {
-            this.address = houseNumber + " " + street + " " + quandrant;
+            this.address = houseNumber + " " + street + " " + Enum.GetName(typeof(Quadrant), quadrant);
             this.houseNumber = houseNumber;
             this.street = street;
-            this.quadrant = quandrant;
+            this.quadrant = quadrant;
             this.area = area;
             this.city = city;
             this.province = province;
             this.price = price;
-            this.source = source;
             this.bathrooms = bathrooms;
             this.bedrooms = bedrooms;
             this.detailText = detailText;
+<<<<<<< .mine
+            this.mainImage = mainImage;
+            this.images = images;
+            this.squareFeet = squarefeet;
+            this.features = houseFeatures;
+            this.listingType = houseListingType;
+            this.buildingType = houseBuildingType;
+=======
             this.Photos = new List<Image>();
             foreach (string imagePath in imagePaths)
             {
                 Photos.Add(new Image() { Source = new BitmapImage(new Uri(imagePath)) });
             }
+>>>>>>> .r19
             GeoCode();
         }
 
@@ -195,4 +221,39 @@ namespace CPSC481
             return String.Format("{0}, {1}", Latitude, Longitude);
         }
     }
+
+    public enum Quadrant
+    {
+        NW,
+        SW,
+        SE,
+        NE
+    }
+
+    public enum ListingType
+    {
+        Residential,
+        Recreational,
+        Agricultural,
+        Commercial,
+        Land
+    }
+
+    public enum BuildingType
+    {
+        House,
+        Apartment,
+        Townhouse,
+        Duplex
+    }
+
+    [Flags]
+    public enum Features
+    {
+        AC = 1 << 1,
+        Pool = 1 << 2,
+        Fireplace= 1 << 3,
+        Garage = 1 << 4
+    }
+
 }
