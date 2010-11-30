@@ -78,6 +78,7 @@
     <Compile Include="ContactInfoControl.xaml.cs">
       <DependentUpon>ContactInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataItem.cs" />
     <Compile Include="DetailGalleryControl.xaml.cs">
       <DependentUpon>DetailGalleryControl.xaml</DependentUpon>
     </Compile>
@@ -111,6 +112,24 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\.svn\all-wcprops" />
+    <None Include="Resources\.svn\entries" />
+    <None Include="Resources\.svn\prop-base\1leftarrow.png.svn-base" />
+    <None Include="Resources\.svn\prop-base\1rightarrow.png.svn-base" />
+    <None Include="Resources\.svn\prop-base\house.jpg.svn-base" />
+    <None Include="Resources\.svn\prop-base\house1.jpg.svn-base" />
+    <None Include="Resources\.svn\prop-base\house2.jpg.svn-base" />
+    <None Include="Resources\.svn\prop-base\house3.jpg.svn-base" />
+    <None Include="Resources\.svn\prop-base\house4.jpg.svn-base" />
+    <None Include="Resources\.svn\prop-base\info.png.svn-base" />
+    <None Include="Resources\.svn\text-base\1leftarrow.png.svn-base" />
+    <None Include="Resources\.svn\text-base\1rightarrow.png.svn-base" />
+    <None Include="Resources\.svn\text-base\house.jpg.svn-base" />
+    <None Include="Resources\.svn\text-base\house1.jpg.svn-base" />
+    <None Include="Resources\.svn\text-base\house2.jpg.svn-base" />
+    <None Include="Resources\.svn\text-base\house3.jpg.svn-base" />
+    <None Include="Resources\.svn\text-base\house4.jpg.svn-base" />
+    <None Include="Resources\.svn\text-base\info.png.svn-base" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ConfirmationControl.xaml">
@@ -138,15 +157,25 @@
     <Content Include="GoogleMaps.swf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\1rightarrow.png" />
-    <Resource Include="Resources\1leftarrow.png" />
-    <Resource Include="Resources\house.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\info.png" />
+    <Resource Include="Resources\help.png" />
+    <Resource Include="Resources\camera.png" />
+    <Resource Include="Resources\image2.png" />
+    <Resource Include="Resources\edit_remove.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1leftarrow.png" />
+    <Resource Include="Resources\1rightarrow.png" />
+    <Resource Include="Resources\edit_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\.svn\props\" />
+    <Folder Include="Resources\.svn\tmp\prop-base\" />
+    <Folder Include="Resources\.svn\tmp\props\" />
+    <Folder Include="Resources\.svn\tmp\text-base\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
