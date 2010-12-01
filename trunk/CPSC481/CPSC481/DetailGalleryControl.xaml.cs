@@ -9,8 +9,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Effects;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CPSC481
 {
@@ -19,10 +19,25 @@ namespace CPSC481
     /// </summary>
     public partial class DetailGalleryControl : UserControl
     {
+        private Image selected;
+        private int selectedIndex;
+
         public DetailGalleryControl(House houseToDisplay)
         {
             this.DataContext = houseToDisplay;
             InitializeComponent();
+
+            string SourceOfImages = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "Photos"); 
+
+            foreach(var imgPath in new string[] { SourceOfImages + @"\house5_1.jpg",  SourceOfImages + @"\house5_2.jpg", SourceOfImages + @"\house5_3.jpg", SourceOfImages + @"\house5_4.jpg" })//houseToDisplay.images)
+            {
+                Image newImage = new Image() { Source = new BitmapImage(new Uri(imgPath)) };
+                newImage.AddHandler(Image.MouseLeftButtonDownEvent, Delegate.CreateDelegate(Image.MouseLeftButtonDownEvent.HandlerType, this, "Image_MouseLeftButtonDown"));
+                PicturePanel.Children.Add(newImage);
+            }
+            selected = (Image)PicturePanel.Children[0];
+            selectedIndex = 0;
+            DisplayImage.Source = selected.Source;
         }
 
         public DetailGalleryControl(House houseToDisplay, int tabIndex)
@@ -31,5 +46,30 @@ namespace CPSC481
             modalTabs.SelectedIndex = tabIndex;
         }
 
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedIndex + 1 < PicturePanel.Children.Count)
+            {
+                selectedIndex++;
+                DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
+            }
+        }
+
+        private void Prev_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedIndex > 0)
+            {
+                selectedIndex--;
+                DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
+            }
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedImage = (Image)sender;
+            selectedIndex = PicturePanel.Children.IndexOf(selectedImage);
+            selected = selectedImage;
+            DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
+        }
     }
 }

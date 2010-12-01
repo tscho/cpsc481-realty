@@ -30,7 +30,7 @@ namespace CPSC481
         private IEnumerable<House> Results;
         private string currLat = "";
         private string currLon = "";
-        public string SourceOfImages = "C:\\Users\\ljschaab\\images\\";
+        public string SourceOfImages = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "Photos");
         public string AreaTest;
         private const double listingsPerPage = 2;
         private DataItem[] pages;
@@ -273,6 +273,7 @@ namespace CPSC481
 
         private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count < 1) { return; }
             var item = e.AddedItems[0] as House;
             if (item == null) return;
             else centreOnListing(item);
