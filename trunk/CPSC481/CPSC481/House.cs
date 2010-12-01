@@ -18,6 +18,7 @@ namespace CPSC481
         public String houseNumber { get; set; }
         public String street { get; set; }
         public Quadrant quadrant { get; set; }
+        public String quadrantStr { get { return quadrant.ToString(); } }
         public String address { get; set; }
         public decimal price { get; set; }
         public string priceString
@@ -35,12 +36,14 @@ namespace CPSC481
         public string mainImage { get; set; }
         public List<string> images { get; set; }
         public BuildingType buildingType;
+        public string buildingTypeStr { get { return buildingType.ToString(); } }
         public Features features;
+        public string featuresStr { get { return features.ToString(); } }
         public ListingType listingType;
+        public string listingTypeStr { get { return listingType.ToString(); } }
         //public GeocoderLocation LatLng;
         public string Longitude { get; set; }
         public string Latitude { get; set; }
-        public List<Image> Photos { get; private set; }
         private LatLngAccurateToTypes _LatLngAccuracy = 0;
        
         public House(String houseNumber, String street, Quadrant quadrant, String area, String city, String province, decimal price, int bedrooms, int bathrooms, string detailText, string mainImage, List<string> images, int squarefeet, Features houseFeatures, ListingType houseListingType, BuildingType houseBuildingType)
