@@ -189,7 +189,7 @@ namespace CPSC481
                 CurrentPage.Add(house);
             }
             
-            foreach (House currHome in Results)
+            foreach (House currHome in CurrentPage)
             {
                 XElement call = new XElement("invoke",
                    new XAttribute("name", "add"),
@@ -201,7 +201,8 @@ namespace CPSC481
                        new XElement("string", currHome.priceString),
                        new XElement("string", currHome.area),
                        new XElement("string", currHome.city),
-                       new XElement("string", currHome.province)
+                       new XElement("string", currHome.province),
+                       new XElement("string", "gray")
                    )
                );
                 axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
@@ -218,11 +219,45 @@ namespace CPSC481
                 {
                     listBoxPages.SelectedIndex = currIndex - 1;
                     CurrentPage.Clear();
-                    foreach (
-                        var house in
-                            Results.Skip(((int) item.Value - 2)*(int) listingsPerPage).Take((int) listingsPerPage))
+                    foreach (var house in Results.Skip(((int) item.Value - 2)*(int) listingsPerPage).Take((int) listingsPerPage))
                     {
                         CurrentPage.Add(house);
+                    }
+                    removeMarkers();
+                    foreach (House currHome in CurrentPage)
+                    {
+                        XElement call = new XElement("invoke",
+                           new XAttribute("name", "add"),
+                           new XAttribute("returntype", "xml"),
+                           new XElement("arguments",
+                               new XElement("string", currHome.Latitude),
+                               new XElement("string", currHome.Longitude),
+                               new XElement("string", currHome.address),
+                               new XElement("string", currHome.priceString),
+                               new XElement("string", currHome.area),
+                               new XElement("string", currHome.city),
+                               new XElement("string", currHome.province),
+                               new XElement("string", "gray")
+                           )
+                       );
+                        axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                    }
+                    foreach (House currHome in FavouriteListings)
+                    {
+                            XElement call = new XElement("invoke",
+                            new XAttribute("name", "add"),
+                            new XAttribute("returntype", "xml"),
+                            new XElement("arguments",
+                                new XElement("string", currHome.Latitude),
+                                new XElement("string", currHome.Longitude),
+                                new XElement("string", currHome.address),
+                                new XElement("string", currHome.priceString),
+                                new XElement("string", currHome.area),
+                                new XElement("string", currHome.city),
+                                new XElement("string", currHome.province),
+                                new XElement("string", "red")
+                            ));
+                            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
                     }
                 }
                 else
@@ -247,6 +282,45 @@ namespace CPSC481
                     {
                         CurrentPage.Add(house);
                     }
+                    removeMarkers();
+                    foreach (House currHome in CurrentPage)
+                    {
+                        if(!FavouriteListings.Contains(currHome))
+                        {
+                           XElement call = new XElement("invoke",
+                           new XAttribute("name", "add"),
+                           new XAttribute("returntype", "xml"),
+                           new XElement("arguments",
+                               new XElement("string", currHome.Latitude),
+                               new XElement("string", currHome.Longitude),
+                               new XElement("string", currHome.address),
+                               new XElement("string", currHome.priceString),
+                               new XElement("string", currHome.area),
+                               new XElement("string", currHome.city),
+                               new XElement("string", currHome.province),
+                               new XElement("string", "gray")
+                           ));
+                           axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                        }
+                    }
+                    foreach (House currHome in FavouriteListings)
+                    {
+                            XElement call = new XElement("invoke",
+                            new XAttribute("name", "add"),
+                            new XAttribute("returntype", "xml"),
+                            new XElement("arguments",
+                                new XElement("string", currHome.Latitude),
+                                new XElement("string", currHome.Longitude),
+                                new XElement("string", currHome.address),
+                                new XElement("string", currHome.priceString),
+                                new XElement("string", currHome.area),
+                                new XElement("string", currHome.city),
+                                new XElement("string", currHome.province),
+                                new XElement("string", "red")
+                            ));
+                            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                    }
+
                 }
                 else
                 {
@@ -307,16 +381,50 @@ namespace CPSC481
             axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
         }
 
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            //if (e.Key == Key.Enter)
-            //Search_Click(sender, null);
-        }
-
         private void removeFromFavs(object sender, RoutedEventArgs e)
         {
             var house = (House)((Button)sender).DataContext;
             FavouriteListings.Remove(house);
+            removeMarkers();
+            foreach (House currHome in CurrentPage)
+            {
+                if (!FavouriteListings.Contains(currHome))
+                {
+                    XElement call = new XElement("invoke",
+                    new XAttribute("name", "add"),
+                    new XAttribute("returntype", "xml"),
+                    new XElement("arguments",
+                        new XElement("string", currHome.Latitude),
+                        new XElement("string", currHome.Longitude),
+                        new XElement("string", currHome.address),
+                        new XElement("string", currHome.priceString),
+                        new XElement("string", currHome.area),
+                        new XElement("string", currHome.city),
+                        new XElement("string", currHome.province),
+                        new XElement("string", "gray")
+                    ));
+                    axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                }
+            }
+
+            foreach (House currHome in FavouriteListings)
+            {
+                    XElement call = new XElement("invoke",
+                    new XAttribute("name", "add"),
+                    new XAttribute("returntype", "xml"),
+                    new XElement("arguments",
+                        new XElement("string", currHome.Latitude),
+                        new XElement("string", currHome.Longitude),
+                        new XElement("string", currHome.address),
+                        new XElement("string", currHome.priceString),
+                        new XElement("string", currHome.area),
+                        new XElement("string", currHome.city),
+                        new XElement("string", currHome.province),
+                        new XElement("string", "red")
+                    ));
+                    axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+            }
+
         }
 
 
@@ -326,6 +434,20 @@ namespace CPSC481
             if (!FavouriteListings.Contains(house))
             {
                 FavouriteListings.Add(house);
+                XElement call = new XElement("invoke",
+                           new XAttribute("name", "add"),
+                           new XAttribute("returntype", "xml"),
+                           new XElement("arguments",
+                               new XElement("string", house.Latitude),
+                               new XElement("string", house.Longitude),
+                               new XElement("string", house.address),
+                               new XElement("string", house.priceString),
+                               new XElement("string", house.area),
+                               new XElement("string", house.city),
+                               new XElement("string", house.province),
+                               new XElement("string", "red")
+                           ));
+                axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
             }
             else
             {
