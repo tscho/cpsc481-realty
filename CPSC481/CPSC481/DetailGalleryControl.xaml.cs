@@ -29,7 +29,7 @@ namespace CPSC481
 
             string SourceOfImages = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "Photos"); 
 
-            foreach(var imgPath in new string[] { SourceOfImages + @"\house5_1.jpg",  SourceOfImages + @"\house5_2.jpg", SourceOfImages + @"\house5_3.jpg", SourceOfImages + @"\house5_4.jpg" })//houseToDisplay.images)
+            foreach(var imgPath in houseToDisplay.images)
             {
                 Image newImage = new Image() { Source = new BitmapImage(new Uri(imgPath)) };
                 newImage.AddHandler(Image.MouseLeftButtonDownEvent, Delegate.CreateDelegate(Image.MouseLeftButtonDownEvent.HandlerType, this, "Image_MouseLeftButtonDown"));
