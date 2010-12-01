@@ -157,6 +157,15 @@
     <Content Include="GoogleMaps.swf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Photos\house6_2.jpg" />
+    <Resource Include="Photos\house6_3.jpg" />
+    <Resource Include="Photos\house6_4.jpg" />
+    <Resource Include="Photos\house7_1.jpg" />
+    <Resource Include="Photos\house7_2.jpg" />
+    <Resource Include="Photos\house7_3.jpg" />
+    <Resource Include="Photos\house7_4.jpg" />
+    <Resource Include="Photos\house6_1.jpg" />
+    <Resource Include="Resources\agt_home.png" />
     <None Include="Photos\house1_1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -32,7 +32,7 @@ namespace CPSC481
         private string currLon = "";
         public string SourceOfImages = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "Photos");
         public string AreaTest;
-        private const double listingsPerPage = 2;
+        private const double listingsPerPage = 5;
         private DataItem[] pages;
 
         public MainWindow()
@@ -198,7 +198,7 @@ namespace CPSC481
                        new XElement("string", currHome.Latitude),
                        new XElement("string", currHome.Longitude),
                        new XElement("string", currHome.address),
-                       new XElement("string", currHome.price),
+                       new XElement("string", currHome.priceString),
                        new XElement("string", currHome.area),
                        new XElement("string", currHome.city),
                        new XElement("string", currHome.province)
@@ -210,40 +210,48 @@ namespace CPSC481
 
         private void previousPage(object sender, RoutedEventArgs e)
         {
-            DataItem item = (DataItem)listBoxPages.SelectedItem;
-            int currIndex = listBoxPages.SelectedIndex;
-            if((int)item.Value > 1)
+            if (Results != null)
             {
-                listBoxPages.SelectedIndex = currIndex - 1;
-                CurrentPage.Clear();
-                foreach (var house in Results.Skip(((int)item.Value - 2) * (int)listingsPerPage).Take((int)listingsPerPage))
+                DataItem item = (DataItem) listBoxPages.SelectedItem;
+                int currIndex = listBoxPages.SelectedIndex;
+                if ((int) item.Value > 1)
                 {
-                    CurrentPage.Add(house);
+                    listBoxPages.SelectedIndex = currIndex - 1;
+                    CurrentPage.Clear();
+                    foreach (
+                        var house in
+                            Results.Skip(((int) item.Value - 2)*(int) listingsPerPage).Take((int) listingsPerPage))
+                    {
+                        CurrentPage.Add(house);
+                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Already on page 1");
+                else
+                {
+                    MessageBox.Show("Already on page 1");
+                }
             }
         }
 
         private void nextPage(object sender, RoutedEventArgs e)
         {
-            double numPages = Math.Ceiling(Results.Count() / listingsPerPage);
-            DataItem item = (DataItem)listBoxPages.SelectedItem;
-            int currIndex = listBoxPages.SelectedIndex;
-            if ((int)item.Value < pages.Count())
+            if(Results != null)
             {
-                listBoxPages.SelectedIndex = currIndex + 1;
-                CurrentPage.Clear();
-                foreach (var house in Results.Skip((currIndex + 1) * (int)listingsPerPage).Take((int)listingsPerPage))
+                double numPages = Math.Ceiling(Results.Count() / listingsPerPage);
+                DataItem item = (DataItem)listBoxPages.SelectedItem;
+                int currIndex = listBoxPages.SelectedIndex;
+                if ((int)item.Value < pages.Count())
                 {
-                    CurrentPage.Add(house);
+                    listBoxPages.SelectedIndex = currIndex + 1;
+                    CurrentPage.Clear();
+                    foreach (var house in Results.Skip((currIndex + 1) * (int)listingsPerPage).Take((int)listingsPerPage))
+                    {
+                        CurrentPage.Add(house);
+                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Already on last page");
+                else
+                {
+                    MessageBox.Show("Already on last page");
+                } 
             }
         }
 
@@ -267,6 +275,7 @@ namespace CPSC481
 
         private void favourites_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count < 1) { return; }
             var item = e.AddedItems[0] as House;
             if (item == null) return;
             else centreOnListing(item);
@@ -289,7 +298,7 @@ namespace CPSC481
                        new XElement("string", centreHouse.Latitude),
                        new XElement("string", centreHouse.Longitude),
                        new XElement("string", centreHouse.address),
-                       new XElement("string", centreHouse.price),
+                       new XElement("string", centreHouse.priceString),
                        new XElement("string", centreHouse.area),
                        new XElement("string", centreHouse.city),
                        new XElement("string", centreHouse.province)
@@ -360,69 +369,93 @@ namespace CPSC481
             List<string> images = new List<string>();
             //images.Add(Path.Combine(SourceOfImages, "house1_1.jpg"));
 
-                for (int j = 0; j < 4; j++)
+                for (int j = 1; j < 5; j++)
                 {
-                    if (j == 0)
-                        
-                    imageTag = "1" + "_" + j.ToString();
-                    images.Add(Path.Combine(SourceOfImages, imageTag));
+
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "1" + "_" + j.ToString() +".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house1_1.jpg");
                 string desc = "Treat yourself to a bright, lovely and well maintained 2 storey condo in charming Bow Ridge Landing. This home is an end unit with an extra main floor window to let in the natural light. The cosy kitchen has oak cupboards and laminate counter tops with a ceramic tile backsplash in calm, neutral tones. From the kitchen, a back door leads to a huge deck surrounded by lots of grass and trees, creating a private place to enjoy the outdoors. A living/dining room and 2 piece bathroom with stacked washer and dryer complete the main level. Upstairs there are 3 spacious bedrooms and a 4 piece bathroom. The master bedroom has a 4 piece ensuite and walk-in closet. The basement is partially developed with plenty of storage shelves and a workbench. There is an attached single car garage long enough to contain another work bench. The drive way is generous enough to park another car. What are you waiting for? View this home today!";
                 AllListings.Add(new House("2708", "Conrad Drive", Quadrant.NW, "Brentwood,", "Calgary, ", "Alberta", 200000, 2, 2, desc, image, images, 2300, Features.Fireplace, ListingType.Residential, BuildingType.House));
-
-                for (int j = 0; j < 4; j++)
+                images.Clear();
+                for (int j = 1; j < 5; j++)
                 {
-                    if (j == 0)
-                        image = Path.Combine(SourceOfImages, imageTag);
-                    imageTag = "2" + "_" + j.ToString();
-                    images.Add(Path.Combine(SourceOfImages, imageTag));
+
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "2" + "_" + j.ToString() + ".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house2_1.jpg");
                 desc = "ATTENTION INVESTORS, BUILDERS AND REVENUE GENERATORS. Here is a sub dividable, RC-2, 50' x 145' lot w/ a current tenant paying $3000 per month!! (modestly furnished). Tenants are willing to stay while you decide what to build and collect income while you wait--Or live in this cute bungalow until its time for the dream home(s) to be built. Apart from wall to wall hardwoods, sunny kitchen, south facing backyard & deck, garage, brand new 2009 High Efficiency furnace and separate basement entrance for optional (non-conforming) suite--this little gem is ready to be sold. Across from the Confederation golf course, this inner city property has tonnes of potential and come spring--you will be glad you have already purchased your project & investment... ";
                 AllListings.Add(new House("2411", "4th Street", Quadrant.NW, "Brentwood,", "Calgary, ", "Alberta", 479000, 2, 2, desc, image, images, 1200, Features.Garage, ListingType.Residential, BuildingType.House));
-
-                for (int j = 0; j < 4; j++)
+                images.Clear();
+                for (int j = 1; j < 5; j++)
                 {
-                    if (j == 0)
-                        image = Path.Combine(SourceOfImages, imageTag);
-                    imageTag = "3" + "_" + j.ToString();
-                    images.Add(Path.Combine(SourceOfImages, imageTag));
+
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "3" + "_" + j.ToString() + ".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house3_1.jpg");
                 desc = "Come check out the Confederation by Birchwood's CityLife Homes...this brand new two storey infill on this quiet street across from Aberhart High School's playing field. This 1729sqft home offers 9ft ceilings & rich hardwood floors, which beautifully complement the contemporary earthtone decor. The stylish maple island kitchen has stainless steel appliances, a raised eating bar, quartz counters & glass backsplash. The open concept living/dining room is ideal for entertaining, & there's also a family room with a big South-facing window. The master bedroom is just a terrific size & enjoys a large walk-in closet & a luxurious ensuite with double sinks. Two more bedrooms share another full bathroom, plus there's a handy 2nd floor laundry room too. Complete with an inviting front porch, an unfinished lower level with 9ft ceilings & a sunny South backyard, this fantastic property will be the perfect home for your family...available for quick possession, minutes to the University, LRT & shopping. ";
                 AllListings.Add(new House("5149", "Country Hills Blvd", Quadrant.NW, "Country Hills,", "Calgary, ", "Alberta", 599000, 2, 2, desc, image, images, 1500, Features.Garage, ListingType.Residential, BuildingType.House));
+                images.Clear();
 
-
-                for (int j = 0; j < 4; j++)
+                for (int j = 1; j < 5; j++)
                 {
-                    if (j == 0)
-                        image = Path.Combine(SourceOfImages, imageTag);
-                    imageTag = "4" + "_" + j.ToString();
-                    images.Add(Path.Combine(SourceOfImages, imageTag));
+
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "4" + "_" + j.ToString() + ".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house4_1.jpg");
                 desc = "One of the Best locations in Eau Claire..Walk to work and enjoy the local shops and restaurants. This Luxury Town House backs directly onto the River and Eau Claire path way. Recently professionally Renovated by Paul Lavoie interior Design Firm. Enjoy the beautiful unobstructed views from all 3 levels. This home was featured on the cover of Opulence Magazine after its first set of renovations. Outstanding floor plan with 10ft ceilings, gourmet Kitchen with massive center granite island great for entertaining. Spacious dining room + Living room combination. Enjoy the Open flame fireplace and central A/C. Master suite offers large walk in closet and huge deck overlooking the River. 2nd bedroom offers its own ensuite bath. Upper level offer plenty of options from home office to 3rd bedroom or home theatre area. Private access to your 2 underground parking stalls. Private gated front access. Enjoy the summer on your front patio with plenty of space to entertain. Units like this rarely come along. Call today";
                 AllListings.Add(new House("400", "Eau Claire AV", Quadrant.SW, "Eau Claire,", "Calgary, ", "Alberta", 1125000, 2, 2, desc, image, images, 3000, Features.Pool, ListingType.Residential, BuildingType.Townhouse));
+                images.Clear();
 
-
-                for (int j = 0; j < 4; j++)
+                for (int j = 1; j < 5; j++)
                 {
-                    if (j == 0)
-                        image = Path.Combine(SourceOfImages, imageTag);
-                    imageTag = "5" + "_" + j.ToString();
-                    images.Add(Path.Combine(SourceOfImages, imageTag));
+
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "5" + "_" + j.ToString() + ".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house5_1.jpg");
                 desc = "Great opportunity for a seldom available main floor unit with a lovely south facing patio. Open floorplan featuring 2 bedrooms & den (den features a glass partition wall allowing lots of light to pass through and patio doors to a second private patio space. Recently installed expresso hardwood flooring, fresh paint, gas fireplace, new cabinet finishings, in suite laundry, lots of visitor parking (indoors) and a great amenities package including tennis courts, work out centre, social/party room and hot tub, make this a very convenient place to live. Not to mention the incredible proximity to the downtown, Bow river pathway system, Eau Claire market & the Kensington neighborhood just north across the river.. Vacant and ready to move into...Extremely well priced - compare the other similar ground floor unit ( gutted/renovated) listed for $300,000 more... THIS IS VALUE... ";
                 AllListings.Add(new House("602", "1A STREET", Quadrant.SW, "Eau Claire,", "Calgary, ", "Alberta", 419000, 2, 2, desc, image, images, 2500, Features.AC | Features.Garage, ListingType.Residential, BuildingType.Apartment));
+                images.Clear();
+                for (int j = 1; j < 5; j++)
+                {
 
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "6" + "_" + j.ToString() + ".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
+                }
+                image = Path.Combine(SourceOfImages, "house6_1.jpg");
+                desc = "Walking distance to the boutiques & restaurants in the revitalized Bridges is where you'll find this stunning 3 bedroom home, built with the charm & style of Calgary's character homes. Showcased by birch floors, neutral colours & granite counters, this fully finished home boasts a beautiful living room with a gas fireplace & wall-to-wall windows, a formal dining room & a gourmet kitchen with high-end stainless steel appliances & sleek black granite counters, a custom birch island/table & stylish white cabinetry. There are vaulted ceilings & his/her walk-in closets in the private master retreat - which enjoys Downtown views & a soaker tub ensuite with double sinks & tiled shower. Two more bedrooms share another full bath, there's a 2nd floor laundry room plus a media room, wine room & a den/rec room in the lower level, which has inslab heating too. Topped off by a heated oversized 2 car garage & workshop, custom built-ins & fabulous outdoor living space, this is truly a home you won't want to miss!";
+                AllListings.Add(new House("219", "8 ST", Quadrant.NE, "Bridgeland,", "Calgary, ", "Alberta", 925000, 3, 3, desc, image, images, 2219, Features.AC | Features.Garage | Features.Fireplace, ListingType.Residential, BuildingType.House));
+                images.Clear();
+                for (int j = 1; j < 5; j++)
+                {
 
-            //AllListings.Add(new House("300", "Meredith Road", "NE", "Brentwood,", "Calgary, ", "Alberta", "$400,000", "2", "2", desc));
-            //AllListings.Add(new House("2508", "Centre Street", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
-            //AllListings.Add(new House("12", "Cheyenne Crescent", "NW", "Brentwood,", "Calgary, ", "Alberta", "$200,000", "2", "2", desc));
-            //CurrentPage = Results.Take(5);
-            //FavouriteListings = CurrentPage;
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "7" + "_" + j.ToString() + ".jpg";
+                    //imageTag = "1" + "_" + j.ToString();
+                    images.Add(image);
+                }
+                image = Path.Combine(SourceOfImages, "house7_1.jpg");
+                desc = "Just Like New Luxury large two storey Condominium in Bridgeland a 15 minute walk to centre of downtown Calgary. The Sienna 2 bedrooms. Master ensuite with double sinks and jacuzzi tub. Second bedroom and 4pc bath on main. Very functional open living/dining/kitchen set with granite counters and bar. 3 way Fireplace in living Room. Huge private patio with gas bbq line and access to large common patio/deck. 9 feet ceilings throughout neutral colors with maple cabinets engineered oak wood floors,slate tile in bathrooms. In suite laundry and large storage room, underground assigned parking.Yes an Outstanding Condo priced at under $280 per sf.";
+                AllListings.Add(new House("41", "6 ST", Quadrant.NE, "Bridgeland,", "Calgary, ", "Alberta", 384000, 2, 3, desc, image, images, 1323, Features.AC , ListingType.Residential, BuildingType.Apartment));
+                images.Clear();
+            
         }
 
         private static DataItem[] prices = new DataItem[] {
