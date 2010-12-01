@@ -229,6 +229,7 @@ namespace CPSC481
 
         private void nextPage(object sender, RoutedEventArgs e)
         {
+            double numPages = Math.Ceiling(Results.Count() / listingsPerPage);
             DataItem item = (DataItem)listBoxPages.SelectedItem;
             int currIndex = listBoxPages.SelectedIndex;
             if ((int)item.Value < pages.Count())

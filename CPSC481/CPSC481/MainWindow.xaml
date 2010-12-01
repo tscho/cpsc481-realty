@@ -12,15 +12,24 @@
     </Window.Background>
     <Window.Resources>
         <ItemsPanelTemplate x:Key="HorizontalPages">
-            <StackPanel Orientation="Horizontal"/>
+            <StackPanel Orientation="Horizontal" Background="Gray"/>
         </ItemsPanelTemplate>
 
         <DataTemplate x:Key="pagesItemTemplate" DataType="CPSC481.DataItem">
-            <StackPanel>
-                <TextBlock Text="{Binding Path=Display}" HorizontalAlignment="Center"/>
+            <StackPanel Margin="-2,0,0,0">
+                <Border x:Name="border" Padding="2,0,2,0" BorderThickness="2" BorderBrush="Transparent" Background="Gray">
+                    <TextBlock Text="{Binding Path=Display}" HorizontalAlignment="Center" Foreground="White"/>
+                </Border>
             </StackPanel>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Value="True">
+                    <Setter TargetName="border" Property="BorderBrush" Value="Blue"/>
+                    <Setter TargetName="border" Property="Background" Value="Gray"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         <ObjectDataProvider x:Key="pages" ObjectType="{x:Type CPSC481:DataItem}"/>
+                
 
         <Style x:Key="ToolTipStyle" TargetType="ToolTip">
             <Setter Property = "HorizontalOffset" Value="2"/>
@@ -443,7 +452,7 @@
                 &lt; Prev Page
             </Button>
 
-            <ListBox Name="listBoxPages" SelectedIndex="0" ItemTemplate="{StaticResource pagesItemTemplate}" ItemsPanel="{StaticResource HorizontalPages}" ItemsSource="{Binding Source={StaticResource pages}}">
+            <ListBox Name="listBoxPages" BorderThickness="0" SelectedIndex="0" Background="Gray" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource pagesItemTemplate}" ItemsPanel="{StaticResource HorizontalPages}" ItemsSource="{Binding Source={StaticResource pages}}">
                 
             </ListBox>
             <!--<StackPanel Name="pagesPanel" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Center" Orientation="Horizontal">
