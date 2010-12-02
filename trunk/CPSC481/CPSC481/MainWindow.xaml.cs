@@ -61,6 +61,8 @@ namespace CPSC481
             axFlash.Movie = System.Windows.Forms.Application.StartupPath + "\\GoogleMaps.swf";
 
             axFlash.FlashCall += new AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEventHandler(axFlash_FlashCall);
+            nextPageButton.IsEnabled = false;
+            previousPageButton.IsEnabled = false;
         }
 
         void axFlash_FlashCall(object sender, AxShockwaveFlashObjects._IShockwaveFlashEvents_FlashCallEvent e)
@@ -188,23 +190,42 @@ namespace CPSC481
             {
                 CurrentPage.Add(house);
             }
-            
+            removeMarkers();
             foreach (House currHome in CurrentPage)
             {
+                if (!FavouriteListings.Contains(currHome))
+                {
+                    XElement call = new XElement("invoke",
+                    new XAttribute("name", "add"),
+                    new XAttribute("returntype", "xml"),
+                    new XElement("arguments",
+                        new XElement("string", currHome.Latitude),
+                        new XElement("string", currHome.Longitude),
+                        new XElement("string", currHome.address),
+                        new XElement("string", currHome.priceString),
+                        new XElement("string", currHome.area),
+                        new XElement("string", currHome.city),
+                        new XElement("string", currHome.province),
+                        new XElement("string", "gray")
+                    ));
+                    axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                }
+            }
+            foreach (House currHome in FavouriteListings)
+            {
                 XElement call = new XElement("invoke",
-                   new XAttribute("name", "add"),
-                   new XAttribute("returntype", "xml"),
-                   new XElement("arguments",
-                       new XElement("string", currHome.Latitude),
-                       new XElement("string", currHome.Longitude),
-                       new XElement("string", currHome.address),
-                       new XElement("string", currHome.priceString),
-                       new XElement("string", currHome.area),
-                       new XElement("string", currHome.city),
-                       new XElement("string", currHome.province),
-                       new XElement("string", "gray")
-                   )
-               );
+                new XAttribute("name", "add"),
+                new XAttribute("returntype", "xml"),
+                new XElement("arguments",
+                    new XElement("string", currHome.Latitude),
+                    new XElement("string", currHome.Longitude),
+                    new XElement("string", currHome.address),
+                    new XElement("string", currHome.priceString),
+                    new XElement("string", currHome.area),
+                    new XElement("string", currHome.city),
+                    new XElement("string", currHome.province),
+                    new XElement("string", "red")
+                ));
                 axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
             }
         }
@@ -217,14 +238,15 @@ namespace CPSC481
                 int currIndex = listBoxPages.SelectedIndex;
                 if ((int) item.Value > 1)
                 {
+
                     listBoxPages.SelectedIndex = currIndex - 1;
-                    CurrentPage.Clear();
+                    /*CurrentPage.Clear();
                     foreach (var house in Results.Skip(((int) item.Value - 2)*(int) listingsPerPage).Take((int) listingsPerPage))
                     {
                         CurrentPage.Add(house);
                     }
-                    removeMarkers();
-                    foreach (House currHome in CurrentPage)
+                    removeMarkers();*/
+                    /*foreach (House currHome in CurrentPage)
                     {
                         XElement call = new XElement("invoke",
                            new XAttribute("name", "add"),
@@ -258,12 +280,9 @@ namespace CPSC481
                                 new XElement("string", "red")
                             ));
                             axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
-                    }
+                    }*/
                 }
-                else
-                {
-                    MessageBox.Show("Already on page 1");
-                }
+                
             }
         }
 
@@ -274,16 +293,16 @@ namespace CPSC481
                 double numPages = Math.Ceiling(Results.Count() / listingsPerPage);
                 DataItem item = (DataItem)listBoxPages.SelectedItem;
                 int currIndex = listBoxPages.SelectedIndex;
-                if ((int)item.Value < pages.Count())
+                if((int)item.Value < pages.Count())
                 {
                     listBoxPages.SelectedIndex = currIndex + 1;
-                    CurrentPage.Clear();
+                    /*CurrentPage.Clear();
                     foreach (var house in Results.Skip((currIndex + 1) * (int)listingsPerPage).Take((int)listingsPerPage))
                     {
                         CurrentPage.Add(house);
                     }
-                    removeMarkers();
-                    foreach (House currHome in CurrentPage)
+                    removeMarkers();*/
+                    /*foreach (House currHome in CurrentPage)
                     {
                         if(!FavouriteListings.Contains(currHome))
                         {
@@ -319,13 +338,85 @@ namespace CPSC481
                                 new XElement("string", "red")
                             ));
                             axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
-                    }
+                    }*/
+                }
+            }
+        }
 
+        private void pages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            double numPages = Math.Ceiling(Results.Count() / listingsPerPage);
+            DataItem item = (DataItem)listBoxPages.SelectedItem;
+            int currIndex = listBoxPages.SelectedIndex;
+            if(item != null)
+            {
+                if(pages.Count() == 1)
+                {
+                    previousPageButton.IsEnabled = false;
+                    nextPageButton.IsEnabled = false;
+                }
+                else if ((int)item.Value < pages.Count() && (int)item.Value > 1)
+                {
+                    previousPageButton.IsEnabled = true;
+                    nextPageButton.IsEnabled = true;
                 }
                 else
                 {
-                    MessageBox.Show("Already on last page");
-                } 
+                    if ((int)item.Value == pages.Count())
+                    {
+                        nextPageButton.IsEnabled = false;
+                        previousPageButton.IsEnabled = true;
+                    }
+                    if ((int)item.Value == 1)
+                    {
+                        previousPageButton.IsEnabled = false;
+                        nextPageButton.IsEnabled = true;
+                    }
+                }
+
+                CurrentPage.Clear();
+                foreach (var house in Results.Skip((currIndex) * (int)listingsPerPage).Take((int)listingsPerPage))
+                {
+                    CurrentPage.Add(house);
+                }
+                removeMarkers();
+                foreach (House currHome in CurrentPage)
+                {
+                    if (!FavouriteListings.Contains(currHome))
+                    {
+                        XElement call = new XElement("invoke",
+                        new XAttribute("name", "add"),
+                        new XAttribute("returntype", "xml"),
+                        new XElement("arguments",
+                            new XElement("string", currHome.Latitude),
+                            new XElement("string", currHome.Longitude),
+                            new XElement("string", currHome.address),
+                            new XElement("string", currHome.priceString),
+                            new XElement("string", currHome.area),
+                            new XElement("string", currHome.city),
+                            new XElement("string", currHome.province),
+                            new XElement("string", "gray")
+                        ));
+                        axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                    }
+                }
+                foreach (House currHome in FavouriteListings)
+                {
+                    XElement call = new XElement("invoke",
+                    new XAttribute("name", "add"),
+                    new XAttribute("returntype", "xml"),
+                    new XElement("arguments",
+                        new XElement("string", currHome.Latitude),
+                        new XElement("string", currHome.Longitude),
+                        new XElement("string", currHome.address),
+                        new XElement("string", currHome.priceString),
+                        new XElement("string", currHome.area),
+                        new XElement("string", currHome.city),
+                        new XElement("string", currHome.province),
+                        new XElement("string", "red")
+                    ));
+                    axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
+                }
             }
         }
 
@@ -342,6 +433,18 @@ namespace CPSC481
                     item.Value = i + 1;
                     pages[i] = item;
                 }
+
+            System.Windows.Visibility collapsed = System.Windows.Visibility.Collapsed;
+            if(numPages == 0)
+            {
+                nextPageButton.IsEnabled = false;
+            }
+            else
+            {
+                nextPageButton.IsEnabled = true;
+            }
+
+            previousPageButton.IsEnabled = false;
 
             listBoxPages.ItemsSource = pages;
             listBoxPages.SelectedIndex = 0;
@@ -385,6 +488,13 @@ namespace CPSC481
         {
             var house = (House)((Button)sender).DataContext;
             FavouriteListings.Remove(house);
+
+            if (FavouriteListings.Count == 0)
+            {
+                System.Windows.Visibility visible = System.Windows.Visibility.Visible;
+                FavouritesEmptyText.Visibility = visible;
+            }
+
             removeMarkers();
             foreach (House currHome in CurrentPage)
             {
@@ -430,6 +540,8 @@ namespace CPSC481
 
         private void addToFavs(object sender, RoutedEventArgs e)
         {
+            System.Windows.Visibility hidden = System.Windows.Visibility.Hidden;
+            FavouritesEmptyText.Visibility = hidden;
             var house = (House)((Button)sender).DataContext;
             if (!FavouriteListings.Contains(house))
             {
@@ -655,5 +767,8 @@ namespace CPSC481
             new DataItem { Value=Features.Garage, Display=Features.Garage.ToString() },
             new DataItem { Value=Features.Pool, Display=Features.Pool.ToString() }
         };
-    }
+
+  
+     }
 }
+
