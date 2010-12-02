@@ -19,14 +19,13 @@ namespace CPSC481
     /// </summary>
     public partial class DetailGalleryControl : UserControl
     {
-        private Image selected;
-        private int selectedIndex;
-
         public DetailGalleryControl(House houseToDisplay)
         {
-            //this.DataContext = houseToDisplay;
+            this.DataContext = houseToDisplay;
 
             InitializeComponent();
+
+            DisplayImage.Source = houseToDisplay.images[0].Source;
 
             //foreach(var imgPath in houseToDisplay.images)
             //{
@@ -47,6 +46,8 @@ namespace CPSC481
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
+            if(listPhotos.SelectedIndex + 1 < listPhotos.Items.Count)
+                listPhotos.SelectedIndex++;
             //if (selectedIndex + 1 < PicturePanel.Children.Count)
             //{
             //    selectedIndex++;
@@ -56,6 +57,8 @@ namespace CPSC481
 
         private void Prev_Click(object sender, RoutedEventArgs e)
         {
+            if(listPhotos.SelectedIndex > 0)
+                listPhotos.SelectedIndex--;
             //if (selectedIndex > 0)
             //{
             //    selectedIndex--;
@@ -63,12 +66,19 @@ namespace CPSC481
             //}
         }
 
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    var selectedImage = (Image)sender;
+        //    selectedIndex = PicturePanel.Children.IndexOf(selectedImage);
+        //    selected = selectedImage;
+        //    DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
+        //}
+
+        private void listPhotos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var selectedImage = (Image)sender;
-            //selectedIndex = PicturePanel.Children.IndexOf(selectedImage);
-            //selected = selectedImage;
-            //DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
+            Image selected = (Image)listPhotos.SelectedItem;
+            if (selected != null)
+                DisplayImage.Source = selected.Source;
         }
     }
 }
