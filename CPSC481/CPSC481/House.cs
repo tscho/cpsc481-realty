@@ -29,19 +29,18 @@ namespace CPSC481
         public String city { get; set; }
         public String province { get; set; }
         public int squareFeet { get; set; }
-        //public String source { get; set;}
         public int bedrooms { get; set; }
         public int bathrooms { get; set; }
         public String detailText { get; set; }
         public string mainImage { get; set; }
-        public List<string> images { get; set; }
+        //public List<string> images { get; set; }
+        public List<Image> images { get; private set; }
         public BuildingType buildingType;
         public string buildingTypeStr { get { return buildingType.ToString(); } }
         public Features features;
         public string featuresStr { get { return features.ToString(); } }
         public ListingType listingType;
         public string listingTypeStr { get { return listingType.ToString(); } }
-        //public GeocoderLocation LatLng;
         public string Longitude { get; set; }
         public string Latitude { get; set; }
         private LatLngAccurateToTypes _LatLngAccuracy = 0;
@@ -60,7 +59,12 @@ namespace CPSC481
             this.bedrooms = bedrooms;
             this.detailText = detailText;
             this.mainImage = mainImage;
-            this.images = images;
+            //this.images = images;
+            this.images = new List<Image>();
+            foreach (var path in images)
+            {
+                this.images.Add(new Image() { Source = new BitmapImage(new Uri(path)) });
+            }
             this.squareFeet = squarefeet;
             this.features = houseFeatures;
             this.listingType = houseListingType;
@@ -68,19 +72,6 @@ namespace CPSC481
             GeoCode();
         }
 
-        public List<string> getImages()
-        {
-            //Image[] ret = new Image[images.Count];
-            //foreach (String image in this.images)
-            //    for(int i =0; i < images.Count; i++)
-            //{
-             //   ret[i] = Image.
-                
-            //}
-            //return ret;
-            return this.images;
-            
-        }
 	public LatLngAccurateToTypes LatLngAccuracy
 	{
 		get { return _LatLngAccuracy; }
