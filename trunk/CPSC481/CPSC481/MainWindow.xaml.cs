@@ -489,14 +489,12 @@ namespace CPSC481
             string imageTag = "house";
             string image = "";
             List<string> images = new List<string>();
-            //images.Add(Path.Combine(SourceOfImages, "house1_1.jpg"));
 
                 for (int j = 1; j < 5; j++)
                 {
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "1" + "_" + j.ToString() +".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house1_1.jpg");
@@ -508,7 +506,6 @@ namespace CPSC481
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "2" + "_" + j.ToString() + ".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house2_1.jpg");
@@ -520,7 +517,6 @@ namespace CPSC481
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "3" + "_" + j.ToString() + ".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house3_1.jpg");
@@ -533,7 +529,6 @@ namespace CPSC481
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "4" + "_" + j.ToString() + ".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house4_1.jpg");
@@ -546,7 +541,6 @@ namespace CPSC481
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "5" + "_" + j.ToString() + ".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house5_1.jpg");
@@ -558,7 +552,6 @@ namespace CPSC481
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "6" + "_" + j.ToString() + ".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house6_1.jpg");
@@ -570,7 +563,6 @@ namespace CPSC481
 
                     image = Path.Combine(SourceOfImages, imageTag);
                     image += "7" + "_" + j.ToString() + ".jpg";
-                    //imageTag = "1" + "_" + j.ToString();
                     images.Add(image);
                 }
                 image = Path.Combine(SourceOfImages, "house7_1.jpg");
