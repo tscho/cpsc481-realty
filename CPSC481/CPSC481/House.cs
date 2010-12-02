@@ -68,7 +68,19 @@ namespace CPSC481
             GeoCode();
         }
 
-        
+        public List<string> getImages()
+        {
+            //Image[] ret = new Image[images.Count];
+            //foreach (String image in this.images)
+            //    for(int i =0; i < images.Count; i++)
+            //{
+             //   ret[i] = Image.
+                
+            //}
+            //return ret;
+            return this.images;
+            
+        }
 	public LatLngAccurateToTypes LatLngAccuracy
 	{
 		get { return _LatLngAccuracy; }
