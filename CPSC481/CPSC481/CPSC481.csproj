@@ -157,6 +157,8 @@
     <Content Include="GoogleMaps.swf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\favMarker.png" />
+    <Resource Include="Resources\resultsMarker.png" />
     <None Include="Photos\house6_2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
