@@ -393,7 +393,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ComboBox Name="Bedrooms" HorizontalAlignment="Left" Margin="5,2,5,0" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="1" MinWidth="80" Width="80" ToolTip="Price Range"/>
+                <ComboBox Name="Bedrooms" HorizontalAlignment="Left" Margin="5,2,5,0" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="0" MinWidth="80" Width="80" ToolTip="Price Range"/>
                 <!--====Bedrooms-->
 
 
@@ -410,7 +410,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ComboBox Name="Bathrooms" HorizontalAlignment="Left"  DisplayMemberPath="Display" SelectedValuePath="Value" VerticalAlignment="Stretch" SelectedIndex="1" Margin="5,2,5,0" MinWidth="80" Width="80" ToolTip="Price Range">
+                <ComboBox Name="Bathrooms" HorizontalAlignment="Left"  DisplayMemberPath="Display" SelectedValuePath="Value" VerticalAlignment="Stretch" SelectedIndex="0" Margin="5,2,5,0" MinWidth="80" Width="80" ToolTip="Price Range">
                 </ComboBox>
                 <!--====Bathrooms-->
 
