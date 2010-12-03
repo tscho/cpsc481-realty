@@ -563,7 +563,9 @@ namespace CPSC481
             }
             else
             {
-                MessageBox.Show("House already exists in your favourites.");
+                Modal modal = new Modal(new Message("House already exists in your favourites."));
+                modal.Owner = this;
+                modal.ShowDialog();
             }
         }
 
@@ -588,7 +590,9 @@ namespace CPSC481
         {
             if (FavouriteListings.Count < 1)
             {
-                MessageBox.Show("No Properties Selected");
+                Modal messageModal = new Modal(new Message("No Properties Selected"));
+                messageModal.Owner = this;
+                messageModal.ShowDialog();
                 return;
             }
 
