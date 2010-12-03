@@ -586,6 +586,12 @@ namespace CPSC481
 
         private void clickViewings(object sender, RoutedEventArgs e)
         {
+            if (FavouriteListings.Count < 1)
+            {
+                MessageBox.Show("No Properties Selected");
+                return;
+            }
+
             var info = ContactInfo.readFromFile();
             Modal modal = new Modal();
             modal.setModalControl(new ContactInfoControl(modal, info));

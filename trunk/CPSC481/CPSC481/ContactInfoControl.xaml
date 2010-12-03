@@ -16,14 +16,17 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="2" FontSize="24" FontWeight="Bold">Request Viewings</TextBlock>
         <Label Grid.Row="1">First Name</Label>
         <Label Grid.Row="2">Phone</Label>
         <Label Grid.Row="3">E-mail</Label>
+        <Label Grid.Row="4">Notes</Label>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Path=Phone, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-        <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Margin="0,18,0,0" Grid.Row="4" HorizontalAlignment="Right" Click="submitViewing_click">Request Viewings</Button>
+        <TextBox Grid.Column="1" Grid.Row="4" Width="200" Height="100" TextWrapping="Wrap"/>
+        <Button Grid.Column="2" Style="{StaticResource ButtonStyle}" Margin="0,18,0,0" Grid.Row="5" HorizontalAlignment="Right" Click="submitViewing_click">Request Viewings</Button>
     </Grid>
 </UserControl>
