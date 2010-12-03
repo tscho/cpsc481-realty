@@ -16,7 +16,7 @@
                     MouseDown="Close_MouseDown"
                     MouseEnter="CloseBtn_MouseEnter"
                     MouseLeave="CloseBtn_MouseLeave" MouseUp="CloseBtn_MouseUp">
-                <TextBlock Foreground="White" TextAlignment="Center">Close</TextBlock>
+                <TextBlock Foreground="White" TextAlignment="Left" Margin="2 0 0 0">Close</TextBlock>
             </Border>
             <UserControl Name="control" Margin="14,0,14,14"/>
         </Grid>

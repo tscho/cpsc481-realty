@@ -173,7 +173,7 @@ namespace CPSC481
                 return (quadrantsSelected.Count == 0 || quadrantsSelected.Contains(x.quadrant)) &&
                 (listingTypesSelected.Count == 0 || listingTypesSelected.Contains(x.listingType)) &&
                 (buildingTypesSelected.Capacity == 0 || buildingTypesSelected.Contains(x.buildingType)) &&
-                (searchFeatures == 0 ||(x.features & searchFeatures) > 0) &&
+                ((x.features & searchFeatures) == searchFeatures) &&
                 x.bathrooms >= bathroomsSelected &&
                 x.bedrooms >= bedroomsSelected &&
                 x.squareFeet >= squareFeetLowSelected &&
@@ -538,7 +538,7 @@ namespace CPSC481
         }
 
 
-        private void addToFavs(object sender, RoutedEventArgs e)
+        public void addToFavs(object sender, RoutedEventArgs e)
         {
             System.Windows.Visibility hidden = System.Windows.Visibility.Hidden;
             FavouritesEmptyText.Visibility = hidden;
@@ -586,14 +586,17 @@ namespace CPSC481
 
         private void clickViewings(object sender, RoutedEventArgs e)
         {
-            var info = new ContactInfo();
+            var info = ContactInfo.readFromFile();
             Modal modal = new Modal();
             modal.setModalControl(new ContactInfoControl(modal, info));
             modal.Owner = this;
             modal.ShowDialog();
-            modal = new Modal(new ConfirmationControl());
-            modal.Owner = this;
-            modal.ShowDialog();
+            if (modal.DialogResult != null && modal.DialogResult == true)
+            {
+                modal = new Modal(new ConfirmationControl());
+                modal.Owner = this;
+                modal.ShowDialog();
+            }
         }
 
         public void setupTestData()
@@ -680,6 +683,18 @@ namespace CPSC481
                 image = Path.Combine(SourceOfImages, "house7_1.jpg");
                 desc = "Just Like New Luxury large two storey Condominium in Bridgeland a 15 minute walk to centre of downtown Calgary. The Sienna 2 bedrooms. Master ensuite with double sinks and jacuzzi tub. Second bedroom and 4pc bath on main. Very functional open living/dining/kitchen set with granite counters and bar. 3 way Fireplace in living Room. Huge private patio with gas bbq line and access to large common patio/deck. 9 feet ceilings throughout neutral colors with maple cabinets engineered oak wood floors,slate tile in bathrooms. In suite laundry and large storage room, underground assigned parking.Yes an Outstanding Condo priced at under $280 per sf.";
                 AllListings.Add(new House("41", "6 ST", Quadrant.NE, "Bridgeland,", "Calgary, ", "Alberta", 384000, 2, 3, desc, image, images, 1323, Features.AC , ListingType.Residential, BuildingType.Apartment));
+
+                images = new List<string>();
+                for (int j = 1; j < 5; j++)
+                {
+
+                    image = Path.Combine(SourceOfImages, imageTag);
+                    image += "8" + "_" + j.ToString() + ".jpg";
+                    images.Add(image);
+                }
+                image = Path.Combine(SourceOfImages, "house8_1.jpg");
+                desc = "Great north central location in Greenview Industrial. Seven minutes north of downtown, just off Edmonton Trail. You can own your own bay of 900 sq.ft., Located on the main floor, this bay has its own private washroom, and two parking stalls for you or your customer parking. Loading and access is through a man door in the front. Newer building constructed in 2001. Fully sprinklered for fire protection. 12 foot ceilings and an open concept plan are other amenities of this space.Suitable for uses such as art studio, indoor recreation, counselling services, IT services, office, printing, etc. Available immediately.Contact Listing Broker for additional information, or to view.";
+                AllListings.Add(new House("108 3907", "3A ST", Quadrant.NE, "GreenView", "Calgary", "Alberta", 229000, 0, 1, desc, image, images, 900, Features.Garage, ListingType.Commercial, BuildingType.Townhouse));
         }
 
         private static DataItem[] prices = new DataItem[] {
@@ -746,6 +761,7 @@ namespace CPSC481
         };
 
         private static DataItem[] bedrooms = new DataItem[] {
+            new DataItem { Value=0, Display="0 or more" },
             new DataItem { Value=1, Display="1 or more" },
             new DataItem { Value=2, Display="2 or more" },
             new DataItem { Value=3, Display="3 or more" },
@@ -754,6 +770,7 @@ namespace CPSC481
         };
 
         private static DataItem[] bathrooms = new DataItem[] {
+            new DataItem { Value=0, Display="0 or more" },
             new DataItem { Value=1, Display="1 or more" },
             new DataItem { Value=2, Display="2 or more" },
             new DataItem { Value=3, Display="3 or more" },

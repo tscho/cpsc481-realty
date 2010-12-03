@@ -80,5 +80,11 @@ namespace CPSC481
             if (selected != null)
                 DisplayImage.Source = selected.Source;
         }
+
+        //add to favourites click
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)((Modal)Window.GetWindow(this)).Owner).addToFavs(sender, e);
+        }
     }
 }

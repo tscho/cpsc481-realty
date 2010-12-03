@@ -228,7 +228,7 @@
         <TextBlock Style="{StaticResource TextStyle}" Height="35" Name="textBlock2" Text="Favourites" VerticalAlignment="Top" Grid.Column="2" FontSize="26" TextAlignment="Center"/>
         <Image Grid.Column="2" Grid.Row="0" Style="{StaticResource InfoImageStyle}">
             <Image.ToolTip>
-                <ToolTip ToolTipService.ShowDuration="120000" Width="306" Style="{StaticResource ToolTipStyle}">
+                <ToolTip  ToolTipService.ShowDuration="120000" Width="306" Style="{StaticResource ToolTipStyle}">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="resources\resultsMarker.png"/>
@@ -259,6 +259,14 @@
                 </LinearGradientBrush>
             </Border.BorderBrush>
             <StackPanel Margin="0,35,0,0" Name="stackPanel1" Grid.RowSpan="3">
+                <StackPanel.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Style.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="CornflowerBlue"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="DodgerBlue"/>
+                        </Style.Resources>
+                    </Style>
+                </StackPanel.Resources>
 
                 <!--====LISTING TYPE-->
                 <StackPanel Orientation="Horizontal">
@@ -273,7 +281,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ListBox Name="listingType" SelectionMode="Extended" DisplayMemberPath="Display" SelectedValuePath="Value" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
+                <ListBox Name="listingType" SelectionMode="Multiple" DisplayMemberPath="Display" SelectedValuePath="Value" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
                     <ListBox.BorderThickness>
                         2
                     </ListBox.BorderThickness>
@@ -296,7 +304,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ListBox Name="quandrant" SelectionMode="Extended" SelectedValuePath="Value" DisplayMemberPath="Display" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
+                <ListBox Name="quandrant" SelectionMode="Multiple" SelectedValuePath="Value" DisplayMemberPath="Display" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,0">
                     <ListBox.BorderThickness>
                         2
                     </ListBox.BorderThickness>
@@ -340,7 +348,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                    <ListBox Name="buildingType" SelectionMode="Extended" SelectedValuePath="Value" DisplayMemberPath="Display" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,5" ToolTip="House Type">
+                    <ListBox Name="buildingType" SelectionMode="Multiple" SelectedValuePath="Value" DisplayMemberPath="Display" HorizontalAlignment="Stretch" Height="Auto" MaxHeight="75" Margin="5,2,5,5" ToolTip="House Type">
                         <ListBox.BorderThickness>
                             2
                         </ListBox.BorderThickness>
@@ -385,7 +393,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ComboBox Name="Bedrooms" HorizontalAlignment="Left" Margin="5,2,5,0" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="0" MinWidth="80" Width="80" ToolTip="Price Range"/>
+                <ComboBox Name="Bedrooms" HorizontalAlignment="Left" Margin="5,2,5,0" DisplayMemberPath="Display" SelectedValuePath="Value" SelectedIndex="1" MinWidth="80" Width="80" ToolTip="Price Range"/>
                 <!--====Bedrooms-->
 
 
@@ -402,7 +410,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ComboBox Name="Bathrooms" HorizontalAlignment="Left"  DisplayMemberPath="Display" SelectedValuePath="Value" VerticalAlignment="Stretch" SelectedIndex="0" Margin="5,2,5,0" MinWidth="80" Width="80" ToolTip="Price Range">
+                <ComboBox Name="Bathrooms" HorizontalAlignment="Left"  DisplayMemberPath="Display" SelectedValuePath="Value" VerticalAlignment="Stretch" SelectedIndex="1" Margin="5,2,5,0" MinWidth="80" Width="80" ToolTip="Price Range">
                 </ComboBox>
                 <!--====Bathrooms-->
 
@@ -419,7 +427,7 @@
                         </Image.ToolTip>
                     </Image>
                 </StackPanel>
-                <ListBox Name="Feature" HorizontalAlignment="Stretch" SelectionMode="Extended" Height="75" Margin="5,2,5,0" SelectedValue="{Binding Path=features}" DisplayMemberPath="Display" SelectedValuePath="Value">
+                <ListBox Name="Feature" HorizontalAlignment="Stretch" SelectionMode="Multiple" Height="75" Margin="5,2,5,0" SelectedValue="{Binding Path=features}" DisplayMemberPath="Display" SelectedValuePath="Value">
                     <ListBox.BorderThickness>
                         2
                     </ListBox.BorderThickness>

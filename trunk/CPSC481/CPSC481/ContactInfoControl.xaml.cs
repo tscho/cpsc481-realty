@@ -23,13 +23,24 @@ namespace CPSC481
         public ContactInfoControl(Modal modal, ContactInfo info)
         {
             this.modal = modal;
-            DataContext = info;
+            this.DataContext = info;
             InitializeComponent();
         }
 
         private void submitViewing_click(object sender, RoutedEventArgs e)
         {
-            modal.Close();
+            ContactInfo info = (ContactInfo)DataContext;
+
+            if (!String.IsNullOrEmpty(info.Name) && (!String.IsNullOrEmpty(info.Email) || !String.IsNullOrEmpty(info.Phone)))
+            {
+                modal.DialogResult = true;
+                info.save();
+                modal.Close();
+            }
+            else
+            {
+                MessageBox.Show("Name and one of Phone or E-Mail must be provided");
+            }
         }
     }
 }
