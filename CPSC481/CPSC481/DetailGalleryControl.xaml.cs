@@ -26,16 +26,6 @@ namespace CPSC481
             InitializeComponent();
 
             DisplayImage.Source = houseToDisplay.images[0].Source;
-
-            //foreach(var imgPath in houseToDisplay.images)
-            //{
-            //    Image newImage = new Image() { Source = new BitmapImage(new Uri(imgPath)) };
-            //    newImage.AddHandler(Image.MouseLeftButtonDownEvent, Delegate.CreateDelegate(Image.MouseLeftButtonDownEvent.HandlerType, this, "Image_MouseLeftButtonDown"));
-            //    PicturePanel.Children.Add(newImage);
-            //}
-            //selected = (Image)PicturePanel.Children[0];
-            //selectedIndex = 0;
-            //DisplayImage.Source = selected.Source;
         }
 
         public DetailGalleryControl(House houseToDisplay, int tabIndex)
@@ -48,31 +38,13 @@ namespace CPSC481
         {
             if(listPhotos.SelectedIndex + 1 < listPhotos.Items.Count)
                 listPhotos.SelectedIndex++;
-            //if (selectedIndex + 1 < PicturePanel.Children.Count)
-            //{
-            //    selectedIndex++;
-            //    DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
-            //}
         }
 
         private void Prev_Click(object sender, RoutedEventArgs e)
         {
             if(listPhotos.SelectedIndex > 0)
                 listPhotos.SelectedIndex--;
-            //if (selectedIndex > 0)
-            //{
-            //    selectedIndex--;
-            //    DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
-            //}
         }
-
-        //private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    var selectedImage = (Image)sender;
-        //    selectedIndex = PicturePanel.Children.IndexOf(selectedImage);
-        //    selected = selectedImage;
-        //    DisplayImage.Source = ((Image)PicturePanel.Children[selectedIndex]).Source;
-        //}
 
         private void listPhotos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -39,7 +39,9 @@ namespace CPSC481
             }
             else
             {
-                MessageBox.Show("Name and one of Phone or E-Mail must be provided");
+                Modal modal = new Modal(new Message("Name and one of Phone or E-Mail must be provided"));
+                modal.Owner = Window.GetWindow(this);
+                modal.ShowDialog();
             }
         }
     }
