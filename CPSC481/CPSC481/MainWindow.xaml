@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:ax="clr-namespace:AxShockwaveFlashObjects;assembly=AxInterop.ShockwaveFlashObjects" 
-        xmlns:CPSC481="clr-namespace:CPSC481" Loaded="WindowLoaded" Title="Home Finder" Height="758" Width="1024" MinHeight="768" MinWidth="1024" MaxHeight="758" MaxWidth="1024"
+        xmlns:CPSC481="clr-namespace:CPSC481" Loaded="WindowLoaded" Title="Home Finder" Height="758" Width="1024" MinHeight="758" MinWidth="1024" MaxHeight="758" MaxWidth="1024"
         Icon="Resources/agt_home.png">
     <Window.Background>
         <!--<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
