@@ -96,9 +96,19 @@ namespace CPSC481
                 axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting)); 
         }
 
+        private  void removeAreas()
+        {
+            XElement call = new XElement("invoke",
+                   new XAttribute("name", "removeAreas"),
+                   new XAttribute("returntype", "xml")
+               );
+            axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting)); 
+        }
+
         private void clickSearch(object sender, RoutedEventArgs e)
         {
             removeMarkers();
+            removeAreas();
 
             var listingTypesSelected = new List<ListingType>();
             foreach (var item in listingType.SelectedItems)
@@ -190,8 +200,8 @@ namespace CPSC481
             {
                 CurrentPage.Add(house);
             }
-            removeMarkers();
-            foreach (House currHome in CurrentPage)
+            
+ /*           foreach (House currHome in CurrentPage)
             {
                 if (!FavouriteListings.Contains(currHome))
                 {
@@ -227,7 +237,7 @@ namespace CPSC481
                     new XElement("string", "red")
                 ));
                 axFlash.CallFunction(call.ToString(SaveOptions.DisableFormatting));
-            }
+            }*/
         }
 
         private void previousPage(object sender, RoutedEventArgs e)
