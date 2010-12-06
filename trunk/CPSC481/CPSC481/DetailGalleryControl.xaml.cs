@@ -36,14 +36,18 @@ namespace CPSC481
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
-            if(listPhotos.SelectedIndex + 1 < listPhotos.Items.Count)
+            if (listPhotos.SelectedIndex + 1 < listPhotos.Items.Count)
                 listPhotos.SelectedIndex++;
+            else
+                listPhotos.SelectedIndex = 0;
         }
 
         private void Prev_Click(object sender, RoutedEventArgs e)
         {
             if(listPhotos.SelectedIndex > 0)
                 listPhotos.SelectedIndex--;
+            else
+                listPhotos.SelectedIndex = listPhotos.Items.Count - 1;
         }
 
         private void listPhotos_SelectionChanged(object sender, SelectionChangedEventArgs e)
